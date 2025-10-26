@@ -3,12 +3,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EditCategoryModal from "@/app/components/Category/cata";
+import { Category } from "@/types/catagory";
 
 
-type Category = {
-  id?: string; // Optional _id
-  name: string;
-};
+
 type ApiCategory = {
   _id: string;
   name: string;

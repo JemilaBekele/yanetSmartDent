@@ -5,16 +5,14 @@ import axios from "axios";
 import PatientComponent from "@/app/components/patient/PatientComponent";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
+import { Category } from "@/types/catagory";
 type Service = {
   id: string;
   service: string;
   price: number;
 };
 
-type Category = {
-  id: string;
-  name: string;
-};
+
 type ServiceResponse = {
   _id: string;
   service: string;

@@ -1,9 +1,6 @@
+import { Category } from "@/types/catagory";
 import React, { useEffect, useState } from "react";
 
-type Category = {
-  id: string;
-  name: string;
-};
 
 type Service = {
   id?: string; // Optional identifier

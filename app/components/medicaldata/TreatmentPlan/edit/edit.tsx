@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import PatientComponent from "@/app/components/patient/PatientComponent";
 import { DeleteOutlined } from "@ant-design/icons";
+import { Category } from "@/types/catagory";
 
 type Service = {
   id: string;
@@ -12,10 +13,7 @@ type Service = {
   price: number;
 };
 
-type Category = {
-  id: string;
-  name: string;
-};
+
 
 type TreatmentServiceInput = {
   categoryId: string;

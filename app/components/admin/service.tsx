@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Category } from "@/types/catagory";
 
 type Service = {
   id?: string;
@@ -10,10 +11,7 @@ type Service = {
   categoryId: string;
 };
 
-type Category = {
-  id: string;
-  name: string;
-};
+
 
 type ApiCategory = {
   _id: string;
