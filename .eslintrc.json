@@ -1,0 +1,17 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+ 
+ 
+    "overrides": [
+      {
+        "files": ["types/*.d.ts","app/components/medicaldata/image**/*.tsx","app/reception/**/*.tsx","/app/api/patient/MedicalHistory/detail/[id]/route.ts","/app/api/patient/MedicalHistory/[id]/route.ts"],
+        "rules": {
+          "@typescript-eslint/no-unused-vars": "off",
+          "@next/next/no-img-element": "off",
+          "@typescript-eslint/no-explicit-any": ["off"]
+        }
+      }
+    ]
+  
+  
+}
