@@ -65,7 +65,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ items }) => {
         className={`fixed top-0 left-0 h-screen bg-white z-20 border-r border-gray-300 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col ${
-          isCollapsed ? 'w-20' : 'w-60'
+          isCollapsed ? 'w-20' : 'w-full md:w-80'  // Changed here - full width on mobile, 80 on desktop when expanded
         }`}
       >
         {/* Header */}
