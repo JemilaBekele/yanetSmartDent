@@ -11,7 +11,6 @@ export async function PATCH(request: NextRequest) {
   try {
     if (typeof request === 'object' && request !== null && 'user' in request) {
       const user = (request as { user: { id: string; username: string } }).user;
-      console.log("User Data:", user);
       
       // Parse the request body
       const { invoiceId, currentpayment, receiptvalue } = await request.json(); 

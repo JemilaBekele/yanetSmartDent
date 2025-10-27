@@ -16,7 +16,6 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
     }
-  console.log(id)
     try {
       // Fetch services based on the organization ID
       const services = await OrgService.find({ organizationid: id })
@@ -30,7 +29,6 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
           model: "Category",
           select: "name",
         });
-  console.log(services)
       return NextResponse.json(services, { status: 200 });
     } catch (error) {
       console.error("Error fetching services:", error);

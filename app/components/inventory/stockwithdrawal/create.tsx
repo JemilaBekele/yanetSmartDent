@@ -98,7 +98,6 @@ export default function CreateStockRequestPage() {
       const data = await response.json();
       if (response.ok) {
         setPersonalStock(data.data || []);
-        console.log(data.data);
       } else {
         throw new Error(data.message || 'Failed to fetch personal stock');
       }

@@ -19,7 +19,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const user = (request as { user: { id: string; username: string } }).user;
    
     const body = await request.json();
-    console.log("📩 Received body:", body); // Log incoming data
 
     const { userinfo } = body;
 
@@ -45,7 +44,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     });
 
     const savedHealthinfo = await healthInfo.save();
-    console.log("✅ New healthInfo created:", healthInfo);
   // Add the new health info to the patient
   patient.Healthinfo = patient.Healthinfo || [];
   patient.Healthinfo.push(savedHealthinfo._id);

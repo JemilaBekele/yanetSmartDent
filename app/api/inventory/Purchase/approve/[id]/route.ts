@@ -15,11 +15,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const body = await req.json();
     let { approvalStatus, notes } = body;
 
-    console.log('Incoming body:', body);
 
     // ✅ Normalize status
     const status = approvalStatus?.toUpperCase();
-    console.log('Normalized status:', status);
 
     // ✅ Validate status
     if (!Object.values(ApprovalStatus).includes(status)) {

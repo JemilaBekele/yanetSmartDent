@@ -24,7 +24,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'User not found or unauthorized' }, { status: 401 });
     }
 
-    console.log('Fetching user with ID:', user.id); // Debug log
 
     // Get the logged-in user's branch with type assertion
     const loggedInUser = await User.findById(user.id).select('branch').lean() as any;
@@ -34,11 +33,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    console.log('Logged in user branch:', loggedInUser.branch); // Debug log
 
     // If the logged-in user doesn't have a branch, return empty array
     if (!loggedInUser.branch) {
-      console.log('User has no branch assigned');
       return NextResponse.json([], { status: 200 });
     }
 

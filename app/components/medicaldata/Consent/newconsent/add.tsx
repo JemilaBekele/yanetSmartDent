@@ -115,7 +115,6 @@ export default function ConsontAddForm({ params }: MedicalFindingFormProps) {
       });
 
       if (response.ok) {
-        console.log("Form submitted successfully");
         if (role === "doctor") {
           router.push(`/doctor/ConsentDisplay/all/${patientId}`);
         } else if (role === "admin") {

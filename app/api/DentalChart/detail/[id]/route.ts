@@ -84,12 +84,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       ...updates 
     } = body;
 
-    console.log("Received PATCH dental chart data:", {
-      teethCount: teeth.length,
-      customRootLayersCount: customRootLayers.length,
-      hasBrushSettings: !!brushSettings,
-      otherUpdates: Object.keys(updates)
-    });
+   
 
     // Enhanced validation and sanitization for customRootLayers
     const sanitizedCustomRootLayers = customRootLayers.map((customLayer: any) => {
@@ -168,11 +163,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     if (selectedRootCanalCondition !== undefined) updateData.selectedRootCanalCondition = selectedRootCanalCondition;
     if (brushSettings !== undefined) updateData.brushSettings = sanitizedBrushSettings;
 
-    console.log("Sanitized update data:", {
-      customRootLayersCount: sanitizedCustomRootLayers.length,
-      brushSettings: sanitizedBrushSettings,
-      teethCount: teeth?.length || 0
-    });
+  
 
     // Find existing chart first to add change history
     const existingChart = await DentalChart.findById(id);
@@ -238,12 +229,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       return NextResponse.json({ error: "Dental chart not found after update" }, { status: 404 });
     }
 
-    console.log("Successfully updated dental chart via PATCH:", {
-      chartId: updatedDentalChart._id,
-      version: updatedDentalChart.version,
-      customPaintings: updatedDentalChart.customRootLayers.reduce((total: number, tooth: any) => total + tooth.layers.length, 0),
-      changeType
-    });
+
 
     return NextResponse.json({
       message: "Dental chart updated successfully",

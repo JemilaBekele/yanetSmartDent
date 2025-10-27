@@ -1,6 +1,7 @@
 "use client";
 
 
+import AdminDentalChartViewer from '@/app/components/DentalChart/admin';
 import DentalChartViewer from '@/app/components/DentalChart/bb';
 import { Suspense } from 'react';
 // Import Spinner component
@@ -21,7 +22,7 @@ export default function Home({ params }: AppointmentFormProps) {
 
     <div >
        <Suspense fallback={<div>Loading...</div>}>
-       <DentalChartViewer params={params} />
+       <AdminDentalChartViewer params={params} />
        </Suspense>
       
       

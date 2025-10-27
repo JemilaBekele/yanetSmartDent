@@ -58,7 +58,6 @@ export async function PATCH(request: NextRequest) {
   
       // Delete all services associated with the organization
       const deletedServices = await OrgService.deleteMany({ organizationid: recordId });
-      console.log(`Deleted ${deletedServices.deletedCount} services associated with organization ${recordId}`);
   
       // Delete the organization
       const deletedOrganization = await Orgnazation.findByIdAndDelete(recordId).exec();
@@ -72,7 +71,6 @@ export async function PATCH(request: NextRequest) {
         { $pull: { Orgnazation: recordId } }
       );
   
-      console.log(`Updated ${updatedPatients.modifiedCount} patients to remove organization reference.`);
   
       return NextResponse.json({
         message: "Organization and associated services deleted successfully, and references removed from patients.",

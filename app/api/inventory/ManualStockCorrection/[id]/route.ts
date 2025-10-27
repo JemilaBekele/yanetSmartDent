@@ -189,9 +189,7 @@ export async function DELETE(
     // Delete the main correction
     const deletedCorrection = await ManualStockCorrection.findByIdAndDelete(id);
 
-    console.log(
-      `ManualStockCorrection ${id} deleted by user ${user.username} (${user.id})`
-    );
+  
 
     return NextResponse.json(
       {

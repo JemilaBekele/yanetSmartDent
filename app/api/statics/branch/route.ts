@@ -95,7 +95,6 @@ async function generateBranchMonthlyData(
 ): Promise<BranchReport> {
   const monthlyData: MonthlyData[] = [];
   
-  console.log(`Processing branch: ${branchName} (${branchId})`);
   
   // Filter data for this specific branch - compare ObjectIds properly
   const branchHistory = historyData.filter(item => {
@@ -118,12 +117,6 @@ async function generateBranchMonthlyData(
     return itemBranchId === branchId;
   });
 
-  console.log(`Found data for ${branchName}:`, {
-    history: branchHistory.length,
-    credit: branchCreditHistory.length,
-    expense: branchExpense.length,
-    card: branchCard.length
-  });
 
   // Get all unique months from all data sources for this branch
   const allMonths = [
@@ -135,7 +128,6 @@ async function generateBranchMonthlyData(
 
   const months = Array.from(new Set(allMonths));
 
-  console.log(`Months for ${branchName}:`, months);
 
   // Process each month
   months.forEach(month => {
@@ -165,7 +157,6 @@ async function generateBranchMonthlyData(
   // Calculate performance metrics
   const performanceMetrics = calculatePerformanceMetrics(monthlyData);
 
-  console.log(`Generated ${monthlyData.length} months of data for ${branchName}`);
 
   return {
     branchId,
@@ -233,7 +224,6 @@ export async function GET(request: NextRequest) {
       branchMap.set(branch._id.toString(), branch.name);
     });
 
-    console.log('Available branches:', Object.fromEntries(branchMap));
 
     // Aggregate data from History collection with branch grouping
     const historyData: HistoryData[] = await History.aggregate([
@@ -340,10 +330,6 @@ export async function GET(request: NextRequest) {
       }
     }));
 
-    console.log('Stringified History data:', stringifiedHistoryData);
-    console.log('Stringified Credit history data:', stringifiedCreditHistoryData);
-    console.log('Stringified Expense data:', stringifiedExpenseData);
-    console.log('Stringified Card data:', stringifiedCardData);
 
     // Handle single branch request
     if (branchId) {
@@ -377,7 +363,6 @@ export async function GET(request: NextRequest) {
     // Convert Map to Array first to avoid iteration issues
     const branchArray = Array.from(branchMap.entries());
 
-    console.log('Processing all branches:', branchArray);
 
     for (const [branchId, branchName] of branchArray) {
       try {
@@ -392,13 +377,11 @@ export async function GET(request: NextRequest) {
         
         // Include branch even if no monthly data, but with empty array
         branchReports.push(branchReport);
-        console.log(`Processed branch ${branchName}: ${branchReport.monthlyData.length} months of data`);
       } catch (error) {
         console.error(`Error processing branch ${branchName}:`, error);
       }
     }
 
-    console.log('Final branch reports count:', branchReports.length);
 
     // Calculate cross-branch comparison metrics
     const branchComparison = branchReports

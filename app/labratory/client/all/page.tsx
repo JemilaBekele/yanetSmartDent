@@ -47,10 +47,8 @@ const PatientsPage: React.FC = () => {
         }
     
         const data: Patient[] = await response.json();
-        console.log('Patient Data:', data); // Log the parsed data
     
         if (data.length === 0) {
-          console.log('No patients found');
           return; // Early return if no patients
         }
     

@@ -54,7 +54,6 @@ export async function GET(request: NextRequest) {
   await authorizedMiddleware(request);
     
   try {
-    console.log("Starting to fetch finished forms...");
     
     // Get all FINISHED DentalLabForms and populate patient data
     const finishedForms = await DentalLabForm.find({ finish: true })
@@ -62,10 +61,8 @@ export async function GET(request: NextRequest) {
       .sort({ createdAt: -1 })
       .exec();
 
-    console.log(`Found ${finishedForms.length} finished forms`);
     
     if (!finishedForms || finishedForms.length === 0) {
-      console.log("No finished forms found");
       return NextResponse.json({
         message: "No finished Dental Lab Forms found",
         data: [],
@@ -84,7 +81,6 @@ export async function GET(request: NextRequest) {
     } } = {};
 
     finishedForms.forEach((form: any) => {
-      console.log(`Processing form ${form._id}, patient:`, form.patient);
       
       if (!form.patient) {
         console.log(`Skipping form ${form._id} - no patient data`);
@@ -92,10 +88,8 @@ export async function GET(request: NextRequest) {
       }
 
       const patientId = form.patient._id.toString();
-      console.log(`Patient ID: ${patientId}`);
       
       if (!formsByPatient[patientId]) {
-        console.log(`Creating new entry for patient ${patientId}`);
         formsByPatient[patientId] = {
           patientInfo: {
             _id: form.patient._id,
@@ -112,11 +106,9 @@ export async function GET(request: NextRequest) {
         };
       }
 
-      console.log(`Adding form ${form._id} to patient ${patientId}`);
       formsByPatient[patientId].finishedForms.push(form);
     });
 
-    console.log(`Grouped forms into ${Object.keys(formsByPatient).length} patients`);
 
     // Convert to array and sort forms by date (newest first)
     const result = Object.values(formsByPatient).map(item => ({
@@ -126,7 +118,6 @@ export async function GET(request: NextRequest) {
       )
     }));
 
-    console.log("Final result:", JSON.stringify(result, null, 2));
 
     return NextResponse.json({
       message: "Finished Dental Lab Forms retrieved successfully",

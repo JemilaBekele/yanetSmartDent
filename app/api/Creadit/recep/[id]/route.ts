@@ -54,7 +54,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
    
     // Parse the incoming request body
     const body: CreateInvoiceRequest = await request.json();
-    console.log("Incoming request body:", body);
 
     // Extract the necessary fields from the body
     const { items, customerName, currentPayment, status, createdBy } = body;

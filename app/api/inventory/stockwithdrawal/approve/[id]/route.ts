@@ -14,7 +14,6 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const body = await req.json();
     const { status } = body;
 
-    console.log('Updating stock withdrawal status:', { id, status });
 
     // ✅ Validate status
     if (!Object.values(StockWithdrawalStatus).includes(status)) {

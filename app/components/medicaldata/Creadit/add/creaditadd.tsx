@@ -71,7 +71,6 @@ export default function CreditForm({ params }: InvoiceFormProps) {
     const fetchOrganizations = async () => {
       try {
         const response = await axios.get("/api/app/org");
-        console.log("Fetched organizations:", response.data);
 
         if (response.data && Array.isArray(response.data.data)) {
           const normalizedData = response.data.data.map((org: ApiOrganization) => ({
@@ -109,14 +108,12 @@ export default function CreditForm({ params }: InvoiceFormProps) {
 
   // Fetch categories for sel
   useEffect(() => {
-    console.log("Selected Organization ID:", selectedOrganization?._id ); // Debugging
     if (selectedOrganization?._id ) {
       const fetchCategories = async () => {
         try {
           const response = await fetch(`/api/Creditorgserv/${selectedOrganization?._id }`);
           if (response.ok) {
             const data = await response.json();
-            console.log("Fetched categories:", data); // Debugging
             setCategories(data.map((item: any) => item.categoryId));
           } else {
             console.error("Failed to fetch categories:", response.statusText);
@@ -374,9 +371,7 @@ export default function CreditForm({ params }: InvoiceFormProps) {
   value={selectedOrganization ? selectedOrganization._id : ""}
   onChange={(e) => {
     const selectedOrgId = e.target.value;
-    console.log('Selected Organization ID:', selectedOrgId); // Log selected org ID
     const selectedOrg = organizations.find(org => org._id === selectedOrgId) || null;
-    console.log('Found Organization:', selectedOrg); // Log found organization
     setSelectedOrganization(selectedOrg); // Set the full ApiOrganization object
   }}
   className="w-full p-2"

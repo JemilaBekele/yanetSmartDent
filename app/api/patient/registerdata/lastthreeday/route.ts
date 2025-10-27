@@ -42,8 +42,6 @@ export async function GET(request: NextRequest) {
     // Determine if this is a search operation (has name, cardno, or phone parameters)
     const isSearchOperation = !!(name || cardno || phone);
 
-    console.log('Is search operation:', isSearchOperation);
-    console.log('Search params:', { name, cardno, phone });
 
     // BRANCH FILTER LOGIC:
     // 1. If specific branch is provided in query, use it

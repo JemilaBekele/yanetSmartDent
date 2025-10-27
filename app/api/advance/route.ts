@@ -14,7 +14,6 @@ export async function PATCH(request: NextRequest) {
   try {
     if (typeof request === 'object' && request !== null && 'user' in request) {
       const user = (request as { user: { id: string; username: string } }).user;
-      console.log("User Data:", user);
       
       const userDetails = await User.findById(user.id).select('branch').exec();
       if (!userDetails) {
@@ -25,7 +24,6 @@ export async function PATCH(request: NextRequest) {
       const body = await request.json();
       const { patientId, amount } = body; 
       
-      console.log("Received data:", { patientId, amount, typeOfAmount: typeof amount });
 
       // Validate required fields
       if (!patientId || amount === undefined || amount === null) {
@@ -45,7 +43,6 @@ export async function PATCH(request: NextRequest) {
         paymentAmount = Number(amount);
       }
       
-      console.log("Converted amount:", paymentAmount);
 
       // Validate the converted amount
       if (isNaN(paymentAmount) || paymentAmount <= 0) {
@@ -73,11 +70,7 @@ export async function PATCH(request: NextRequest) {
       const currentPrice = patient.price || 0;
       const currentAdvance = patient.Advance || 0;
       
-      console.log("Current patient data:", {
-        price: currentPrice,
-        advance: currentAdvance,
-        patientName: patient.firstname
-      });
+  
 
       // Calculate new advance amount (ADD instead of subtract)
       const newAdvanceAmount = currentAdvance + paymentAmount;
@@ -85,14 +78,7 @@ export async function PATCH(request: NextRequest) {
       // Calculate the remaining balance
       const remainingBalance = Math.max(0, currentPrice - newAdvanceAmount);
       const isPaymentComplete = newAdvanceAmount >= currentPrice;
-      
-      console.log("Payment calculations:", {
-        newAdvanceAmount,
-        currentPrice,
-        remainingBalance,
-        isPaymentComplete
-      });
-
+   
       // Update the advance (INCREASE it)
       const updatedPatient = await Patient.findByIdAndUpdate(
         patientId,

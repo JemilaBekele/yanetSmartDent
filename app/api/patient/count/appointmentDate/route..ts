@@ -15,8 +15,6 @@ export async function GET(request: NextRequest) {
     const endOfDay = new Date(today.setHours(23, 59, 59, 999)); // End of today
 
     // Log today's date range
-    console.log('Start of Day:', startOfDay);
-    console.log('End of Day:', endOfDay);
 
     // Find all scheduled appointments for today
     const todayAppointments = await Appointment.find({

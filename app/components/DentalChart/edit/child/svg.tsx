@@ -86,9 +86,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
   const handleEraserAction = useCallback((x: number, y: number) => {
     if (rootLayers.length === 0) return;
 
-    console.log('=== ERASER ACTION ===');
-    console.log('Cursor position:', { x, y });
-    console.log('Total layers:', rootLayers.length);
 
     // Method 1: Remove ANY layer that has points within a large radius
     const layersToRemove: string[] = [];
@@ -432,8 +429,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
 
   // Debug function to log layer details
   const handleDebugLayers = () => {
-    console.log('=== DEBUG LAYERS ===');
-    console.log('Current layers count:', rootLayers.length);
     rootLayers.forEach((layer, index) => {
       console.log(`Layer ${index}:`, {
         id: layer.id,
@@ -444,9 +439,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
         lastPoint: layer.points?.[layer.points.length - 1]
       });
     });
-    console.log('Eraser mode:', isErasing);
-    console.log('Brush size:', brushSize);
-    console.log('==================');
   };
 
   // UPDATED: Get root type description for CHILD teeth display

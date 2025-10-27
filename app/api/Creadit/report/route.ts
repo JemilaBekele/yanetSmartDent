@@ -37,27 +37,22 @@ export async function POST(req: NextRequest) {
     }
 
     if (organization) {
-      console.log(`Searching for organization by ID: ${organization}`);
 
       // Ensure organization exists
       const org = await Orgnazation.findOne({ _id: organization }).select('_id');
       if (!org) {
-        console.log('No organization found with the given ID.');
         return NextResponse.json([], { status: 200 });
       }
 
-      console.log(`Organization found with ID: ${org._id}`);
 
       // Find patients linked to this organization
       const patients = await Patient.find({ Orgnazation: org._id }).select('_id');
 
       if (patients.length === 0) {
-        console.log('No patients found for the given organization.');
         return NextResponse.json([], { status: 200 });
       }
 
       const patientIds = patients.map((patient) => new mongoose.Types.ObjectId(patient._id));
-      console.log(`Patients found with IDs: ${patientIds}`);
 
       // Apply the patient filter to the main query
       query['customerName.id'] = { $in: patientIds };

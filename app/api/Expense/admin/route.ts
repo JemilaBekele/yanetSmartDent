@@ -24,12 +24,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { startDate, endDate, branchId } = body;
 
-    console.log('=== SEARCH DEBUG START ===');
-    console.log('Request body:', JSON.stringify(body, null, 2));
-    console.log('Received parameters:', { startDate, endDate, branchId });
 
     if (!startDate || !endDate) {
-      console.log('ERROR: Missing startDate or endDate');
       return NextResponse.json({ 
         message: 'Both start and end dates are required.', 
         success: false 
@@ -41,19 +37,15 @@ export async function POST(req: NextRequest) {
     // Determine which branch to query
     let targetBranchId;
     
-    console.log('Branch ID from request:', branchId);
     
     if (branchId) {
       targetBranchId = branchId;
-      console.log('Using provided branchId:', targetBranchId);
       
       // Convert string to ObjectId if it's a string
       if (typeof targetBranchId === 'string') {
         try {
           query.branch = new mongoose.Types.ObjectId(targetBranchId);
-          console.log('Converted branchId to ObjectId:', query.branch);
         } catch (error) {
-          console.log('ERROR: Invalid branchId format:', targetBranchId);
           return NextResponse.json({ 
             message: 'Invalid branch ID format.', 
             success: false 
@@ -61,7 +53,6 @@ export async function POST(req: NextRequest) {
         }
       } else {
         query.branch = targetBranchId;
-        console.log('Using existing ObjectId for branch:', query.branch);
       }
     } else {
       console.log('No branch filter applied - will return expenses from all branches');
@@ -72,13 +63,9 @@ export async function POST(req: NextRequest) {
     const startDateObj = new Date(startDate);
     const endDateObj = new Date(endDate);
 
-    console.log('Date objects created:', {
-      startDateObj: startDateObj.toISOString(),
-      endDateObj: endDateObj.toISOString()
-    });
+ 
 
     if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
-      console.log('ERROR: Invalid date format');
       return NextResponse.json({ 
         message: 'Invalid date format.', 
         success: false 
@@ -86,7 +73,6 @@ export async function POST(req: NextRequest) {
     }
 
     if (endDateObj < startDateObj) {
-      console.log('ERROR: End date is before start date');
       return NextResponse.json({ 
         message: 'End date must be greater than or equal to start date.', 
         success: false 
@@ -96,14 +82,8 @@ export async function POST(req: NextRequest) {
     endDateObj.setHours(23, 59, 59, 999);
     query.createdAt = { $gte: startDateObj, $lte: endDateObj };
 
-    console.log('Final query object:', JSON.stringify(query, null, 2));
-    console.log('Date range for query:', {
-      gte: query.createdAt?.$gte?.toISOString(),
-      lte: query.createdAt?.$lte?.toISOString()
-    });
 
     // Fetch expenses
-    console.log('Executing Expense.find() with query...');
     
     const expenses = await Expense.find(query)
       .populate({
@@ -112,18 +92,6 @@ export async function POST(req: NextRequest) {
       .sort({ createdAt: -1 })
       .exec();
 
-    console.log('Query results:', {
-      numberOfExpenses: expenses.length,
-      expenses: expenses.map(exp => ({
-        _id: exp._id,
-        branch: exp.branch,
-        createdAt: exp.createdAt,
-        amount: exp.amount,
-        description: exp.description
-      }))
-    });
-
-    console.log('=== SEARCH DEBUG END ===');
 
     return NextResponse.json({
       message: 'Expenses retrieved successfully',

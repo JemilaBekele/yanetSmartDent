@@ -100,11 +100,9 @@ export default function CreateStockLocationMainRequestPage() {
   const fetchLocationStock = async () => {
     try {
       const response = await fetch('/api/inventory/stock/locaation');
-      console.log(response)
       const data = await response.json();
       if (response.ok) {
         setLocationStock(data.data || []);
-        console.log('Location stock data:', data.data);
       } else {
         throw new Error(data.message || 'Failed to fetch location stock');
       }

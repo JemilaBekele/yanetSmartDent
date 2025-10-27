@@ -47,7 +47,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     if (typeof request === 'object' && request !== null && 'user' in request) {
         const user = (request as { user: { id: string; username: string } }).user;
-        console.log("User Data:", user);
 
     // Fetch patient details
     const patient = await Patient.findById(id).exec();

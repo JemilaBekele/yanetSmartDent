@@ -43,7 +43,6 @@ const OrderForm = () => {
         const response = await axios.get("/api/Doctor/both");
         if (response.data && Array.isArray(response.data)) {
           setMedicalStaff(response.data);
-          console.log('Fetched medical staff:', response.data);
         } else {
           console.error("Invalid medical staff data format");
         }

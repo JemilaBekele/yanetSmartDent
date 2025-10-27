@@ -38,7 +38,6 @@ export async function POST(request: NextRequest) {
 
     if (typeof request === 'object' && request !== null && 'user' in request) {
       const user = (request as { user: { id: string; username: string } }).user;
-      console.log("User Data:", user);
 
       // Check if the organization already exists
       const existingOrganization = await Orgnazation.findOne({ organization });
@@ -57,11 +56,9 @@ export async function POST(request: NextRequest) {
 
       // Save the new organization to the database
       await newOrganization.save();
-      console.log("New organization created:", newOrganization);
 
       // Fetch all existing services
       const services = await Service.find({});
-      console.log("Fetched services:", services);
 
       // Copy all services to the OrgService model with the organization ID
       for (const service of services) {
@@ -73,7 +70,6 @@ export async function POST(request: NextRequest) {
         });
 
         await newOrgService.save();
-        console.log(`Copied service: ${service.service}`);
       }
 
       return NextResponse.json({

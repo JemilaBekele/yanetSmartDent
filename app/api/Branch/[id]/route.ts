@@ -19,7 +19,6 @@ export async function PATCH(
       phone, 
       manager 
     } = await req.json();
-    console.log("Received PATCH request to update branch:", { id, name, location, phone, manager });
 
     // Validate inputs
     if (!id) {
@@ -40,7 +39,6 @@ export async function PATCH(
       if (phone !== undefined) updateData.phone = phone;
       if (manager !== undefined) updateData.manager = manager;
 
-      console.log("Final update data:", updateData);
 
       // Check if branch name already exists (if name is being updated)
       if (name) {

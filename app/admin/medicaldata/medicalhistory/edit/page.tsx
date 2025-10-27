@@ -1,5 +1,6 @@
 "use client";
 
+import EditDentalChartViewer from "@/app/components/DentalChart/edit/bb";
 import EditMedicalFindingForm from "@/app/components/medicaldata/medicaldata/medicalhistory/edit/edit";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect } from "react";
@@ -19,6 +20,8 @@ const EditMedicalPageContent = () => {
     <div>
       <h1>Edit Medical Finding</h1>
       <div>
+                <EditDentalChartViewer params={{ id: patientId }} />
+        
         <EditMedicalFindingForm params={{ patientId, findingId }} />
       </div>
     </div>

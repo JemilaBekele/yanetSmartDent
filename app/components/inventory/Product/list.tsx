@@ -94,7 +94,6 @@ export function ProductDataTable({ onEdit, refreshTrigger }: DataTableProps) {
     setLoading(true);
     try {
       const res = await axios.get("/api/inventory/Product");
-      console.log("API Response:", res.data);
       
       // The API returns the array directly, not nested in a products property
       setProducts(res.data || []);

@@ -89,7 +89,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     });
 
     const savedFinorth = await neworthoFinding.save();
-    console.log("Saved MedicalFinding Document:", savedFinorth);
 
     // Update the patient's MedicalFinding reference
     patient.Orthodontics = patient.Orthodontics || [];

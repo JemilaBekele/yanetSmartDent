@@ -11,7 +11,6 @@ interface PasswordRequest {
 }
 
 export async function POST(request: NextRequest) {
-  console.log("[Locked Auth] Password verification request received");
 
   try {
     const { password } = (await request.json()) as PasswordRequest;
@@ -27,7 +26,6 @@ export async function POST(request: NextRequest) {
 
     // Find the single locked user
     const lockedUser = await User.findOne({ role: "Locked" }).select("+password");
-    console.log(`[Locked Auth] Locked user lookup: ${lockedUser ? "Found" : "Not found"}`);
 
     if (!lockedUser) {
       return NextResponse.json(
@@ -38,7 +36,6 @@ export async function POST(request: NextRequest) {
 
     // Verify password
     const isMatch = await bcrypt.compare(password, lockedUser.password);
-    console.log(`[Locked Auth] Password verification ${isMatch ? "successful" : "failed"}`);
 
     if (!isMatch) {
       return NextResponse.json(

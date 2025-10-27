@@ -38,7 +38,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       let existingOrganization = await Orgnazation.findOne({ organization });
 
       if (existingOrganization) {
-        console.log("Organization already exists. Adding patient to it.");
 
         // ✅ Ensure `existingOrganization.patient` is an array
         if (!Array.isArray(existingOrganization.patient)) {
@@ -69,7 +68,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       }
 
       // If organization does not exist, create a new one
-      console.log("Creating a new organization.");
 
       const newOrganization = new Orgnazation({
         organization,
@@ -80,7 +78,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         },
       });
 
-      console.log("Saving new organization with patient ID:", patient._id);
 
       const savedOrganization = await newOrganization.save();
 
@@ -123,7 +120,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: "Patient not found" });
     }
 
-    console.log("Patient's Orgnazation:", patient.Orgnazation);
 
     // If the patient has no medical findings, return an empty array
     if (!patient.Orgnazation || patient.Orgnazation.length === 0) {

@@ -35,7 +35,6 @@ const Home: React.FC = () => {
         if (!response.ok) throw new Error('Network response was not ok');
 
         const data = await response.json();
-        console.log("Patients data:", data.data);
         if (Array.isArray(data.data) && data.data.length > 0) {
           setPatients(data.data);
         } else {

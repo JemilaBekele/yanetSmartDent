@@ -140,7 +140,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     // Delete associated items
     await InventoryRequestItem.deleteMany({ requestId: id });
 
-    console.log(`InventoryRequest ${id} deleted by user ${user.username} (${user.id})`);
 
     return NextResponse.json({ message: 'Inventory request deleted successfully', request: deletedRequest }, { status: 200 });
   } catch (error) {

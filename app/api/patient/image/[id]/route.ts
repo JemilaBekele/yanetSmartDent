@@ -24,7 +24,6 @@ interface Image {
               return NextResponse.json({ error: "Patient ID is required" }, { status: 400 });
           }if (typeof request === 'object' && request !== null && 'user' in request) {
               const user = (request as { user: { id: string; username: string } }).user; // Type assertion for user
-              console.log("User Data:", user);
         
               const patient = await Patient.findById(id).exec();
               if (!patient) {

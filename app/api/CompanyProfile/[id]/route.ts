@@ -24,7 +24,6 @@ export async function PATCH(
       description, 
       announcements 
     } = await req.json();
-    console.log("Received PATCH request to update company profile:", { id, companyName, address, phone, title, description, announcements });
 
     // Validate inputs
     if (!id) {
@@ -42,7 +41,6 @@ export async function PATCH(
 
       // Process announcements if provided
       if (announcements && announcements.length > 0) {
-        console.log("Processing announcements:", announcements);
         
         for (const announcementData of announcements) {
           // If it's an existing announcement with _id, use the ObjectId directly
@@ -62,7 +60,6 @@ export async function PATCH(
             
             const savedAnnouncement = await newAnnouncement.save();
             announcementIds.push(savedAnnouncement._id);
-            console.log("Created new announcement:", savedAnnouncement);
           }
         }
       }
@@ -80,7 +77,6 @@ export async function PATCH(
         updateData.announcements = announcementIds;
       }
 
-      console.log("Final update data:", updateData);
 
       // Find and update the company profile by its ID
       const updatedCompanyProfile = await CompanyProfile.findByIdAndUpdate(

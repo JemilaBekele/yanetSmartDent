@@ -742,11 +742,7 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
       const note = existingTooth?.generalNote || existingTooth?.notes || "";
       setGeneralNote(note);
       
-      console.log("Selected child tooth:", {
-        tooth: newSelectedTooth,
-        existingNote: note,
-        toothData: existingTooth
-      });
+ 
     } else {
       setGeneralNote("");
     }
@@ -807,12 +803,7 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
 
     setTeethData(updatedTeeth);
     
-    console.log("Child surface click:", {
-      tooth: toothNumber,
-      surface: surfaceName,
-      condition: conditionToApply,
-      color: TOOTH_CONDITIONS[conditionToApply as keyof typeof TOOTH_CONDITIONS]?.colorCode
-    });
+ 
   };
 
   const getSurfaceCondition = (toothNumber: number, surfaceName: string) => {
@@ -967,11 +958,7 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
       
       setTeethData(updatedTeeth);
       
-      console.log("Note updated for child tooth:", {
-        tooth: selectedTooth,
-        note: newNote,
-        teethData: updatedTeeth.find(t => t.toothNumber === selectedTooth)
-      });
+    
     }
   };
 
@@ -1032,15 +1019,7 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
           }
         }));
 
-      console.log("Saving child notes:", {
-        totalNotes: notes.length,
-        notesContent: notes,
-        allTeeth: teethData.map(t => ({
-          tooth: t.toothNumber, 
-          hasNote: !!t.generalNote,
-          note: t.generalNote
-        }))
-      });
+    
 
       const updateData = {
         teeth: teethData, // This now contains the updated notes
@@ -1057,13 +1036,7 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
         changeHistory: []
       };
 
-      console.log("Updating child dental chart:", {
-        dentalChartId,
-        teethCount: teethData.length,
-        customRootLayersCount: customRootLayers.length,
-        notesCount: notes.length,
-        hasNotes: notes.length > 0
-      });
+   
 
       const response = await fetch(`/api/DentalChart/detail/${dentalChartId}`, {
         method: "PATCH",
@@ -1081,7 +1054,6 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
       setFormMessage("Child dental chart updated successfully!");
       setFormType("success");
 
-      console.log("Update result:", result);
 
       setTimeout(() => {
         if (role === "doctor") {

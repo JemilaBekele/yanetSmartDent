@@ -88,7 +88,6 @@ const ConsentDisplay = ({ params }: OrthoFindingFormProps) => {
         const { patient, Consent } = response.data.data;
         setPatient(patient);
         setData(normalizeData(Consent || []));
-        console.log(normalizeData(Consent || []))
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to fetch consent records.");

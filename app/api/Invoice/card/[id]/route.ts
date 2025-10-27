@@ -44,11 +44,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log('=== Creating Card ===', {
-      userId: user.id,
-      userBranch: fullUser.branch,
-      patientId: id
-    });
+   
 
     const patient = await Patient.findById(id).exec();
     if (!patient) {

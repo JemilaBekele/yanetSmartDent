@@ -45,23 +45,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
 
     const user = (request as { user: { id: string; username: string } }).user;
-    console.log("User Data:", user);
 
     const { bloodgroup, Epilepsy,BleedingTendency, Diabetics,Hypertension, Hypotension,Hepatitis,Tuberculosis,Astema,description,weight, height, Medication, allergies, habits, Core_Temperature, Respiratory_Rate, Blood_Oxygen, Blood_Pressure, heart_Rate } = await request.json();
-    console.log("Received Payload:", {
-      bloodgroup,
-      weight,
-      height,
-      allergies,
-      habits,
-      Core_Temperature,
-      Respiratory_Rate,
-      Blood_Oxygen,
-      Blood_Pressure,
-      heart_Rate,
-      Hepatitis,Epilepsy,BleedingTendency,Diabetics,
-      Hypotension,Hypertension,Tuberculosis,Astema,description
-    });
+  
 
     const patient = await Patient.findById(id).exec();
     if (!patient) {
@@ -94,7 +80,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     });
 
     const savedHealthinfo = await newHealthinfo.save();
-    console.log("Saved Healthinfo Document:", savedHealthinfo.toObject());
 
     // Add the new health info to the patient
     patient.Healthinfo = patient.Healthinfo || [];

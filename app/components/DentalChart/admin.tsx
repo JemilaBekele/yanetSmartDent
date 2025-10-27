@@ -1130,7 +1130,7 @@ const ExplanationTooltip = ({
 };
 
 // Main Dental Chart Viewer Component - UPDATED for proper dual chart support
-export default function DentalChartViewer({ params }: { params: { id: string } }) {
+export default function AdminDentalChartViewer({ params }: { params: { id: string } }) {
   const patientId = params.id;
   const router = useRouter();
   const [hasDentalChart, setHasDentalChart] = useState<boolean>(false);
@@ -1161,6 +1161,7 @@ export default function DentalChartViewer({ params }: { params: { id: string } }
         }
         
         const data: DentalChartResponse = await response.json();
+        console.log("Loaded dental charts:", data);
         
         if (data.success && data.data.DentalChart.length > 0) {
           // Separate adult and child charts
@@ -1228,11 +1229,9 @@ export default function DentalChartViewer({ params }: { params: { id: string } }
 
   // Edit function for specific chart type
   const handleEdit = (chartId: string, isChild: boolean) => {
-    if (role === "doctor") {
-      router.push(`/doctor/DentalChart/edit?dentalChartId=${chartId}&patientId=${patientId}&isChild=${isChild}`);
-    } else if (role === "admin") {
+
       router.push(`/admin/DentalChart/edit?dentalChartId=${chartId}&patientId=${patientId}&isChild=${isChild}`);
-    }
+    
   };
 
   // Delete function for specific chart
@@ -1596,7 +1595,7 @@ const renderCombinedChart = () => {
           {!dentalCharts.adult && (
             <button
               className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors flex items-center space-x-2"
-              onClick={() => router.push(`/${role}/DentalChart/add/${patientId}`)}>
+              onClick={() => router.push(`/admin/DentalChart/add/${patientId}`)}>
               <PlusOutlined />
               <span>Create Adult Chart</span>
             </button>
@@ -1605,7 +1604,7 @@ const renderCombinedChart = () => {
           {!dentalCharts.child && (
             <button
               className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center space-x-2"
-              onClick={() => router.push(`/${role}/DentalChart/child/add/${patientId}`)}>
+              onClick={() => router.push(`/admin/DentalChart/child/add/${patientId}`)}>
               <PlusOutlined />
               <span>Create Child Chart</span>
             </button>

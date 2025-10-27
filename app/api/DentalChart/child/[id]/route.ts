@@ -30,12 +30,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       changeHistory = []
     } = await request.json();
 
-    console.log("Received dental chart data:", {
-      teethCount: teeth.length,
-      customRootLayersCount: customRootLayers.length,
-      notesCount: notes.length,
-      changeHistoryCount: changeHistory.length
-    });
+  
 
     // FIXED: Process teeth data to include notes from frontend
     const processedTeeth = teeth.map((tooth: any) => {
@@ -51,15 +46,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       };
     });
 
-    console.log("Processed teeth with notes:", {
-      processedTeethCount: processedTeeth.length,
-      teethWithNotes: processedTeeth.filter(t => t.generalNote && t.generalNote.trim() !== '').length,
-      processedTeethData: processedTeeth.map(t => ({
-        tooth: t.toothNumber,
-        hasNote: !!t.generalNote,
-        note: t.generalNote
-      }))
-    });
+    
 
     // Enhanced validation and sanitization for customRootLayers
     const sanitizedCustomRootLayers = customRootLayers.map((customLayer: any) => {
@@ -193,12 +180,6 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
       const savedChart = await existingChart.save();
 
-      console.log("Successfully updated dental chart:", {
-        chartId: savedChart._id,
-        version: savedChart.version,
-        teethWithNotes: savedChart.teeth.filter((t: any) => t.generalNote && t.generalNote.trim() !== '').length,
-        changeHistoryEntries: savedChart.changeHistory.length
-      });
 
       return NextResponse.json({
         message: "Dental chart updated successfully",
@@ -249,11 +230,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       patient.DentalChart.push(savedChart._id);
       await patient.save();
 
-      console.log("Successfully created new dental chart:", {
-        chartId: savedChart._id,
-        teethWithNotes: savedChart.teeth.filter((t: any) => t.generalNote && t.generalNote.trim() !== '').length,
-        changeHistoryEntries: savedChart.changeHistory.length
-      });
+     
 
       return NextResponse.json({
         message: "Dental chart created successfully",

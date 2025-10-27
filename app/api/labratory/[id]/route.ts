@@ -159,13 +159,11 @@ export async function POST(
     });
 
     const savedForm = await newDentalLabForm.save();
-    console.log("Saved Dental Lab Form:", savedForm);
 
     // Link to patient
     patient.DentalLabForm = patient.DentalLabForm || [];
     patient.DentalLabForm.push(savedForm._id);
     await patient.save();
-    console.log("Updated Patient with new Dental Lab Form:", patient);
 
     return NextResponse.json({
       message: "Dental Lab Form created successfully",

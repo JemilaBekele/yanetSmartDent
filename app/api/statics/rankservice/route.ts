@@ -15,9 +15,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const branchId = searchParams.get('branchId');
 
-    console.log('=== STATISTICS DEBUG START ===');
-    console.log('Requested branch (ignored for analysis):', branchId);
-
+   
     // First, fetch all branches to get their names
     const allBranches = await Branch.find({});
     const branchMap = new Map();
@@ -27,7 +25,6 @@ export async function GET(request: NextRequest) {
       branchMap.set(branch._id.toString(), branch.name);
     });
 
-    console.log('Branch map:', Object.fromEntries(branchMap));
 
     // Aggregate services from both Invoice and Credit collections WITHOUT branch filtering
     const invoiceStats = await Invoice.aggregate([
@@ -62,8 +59,6 @@ export async function GET(request: NextRequest) {
       },
     ]);
 
-    console.log('Invoice stats by branch:', invoiceStats);
-    console.log('Credit stats by branch:', creditStats);
 
     // Combine statistics from both sources
     const combinedStats = [...invoiceStats, ...creditStats];
@@ -93,7 +88,6 @@ export async function GET(request: NextRequest) {
       return acc;
     }, []);
 
-    console.log('Merged stats by branch:', mergedStats);
 
     // Get overall statistics (all branches combined)
     const overallStats = mergedStats.reduce((acc, curr) => {
@@ -175,11 +169,6 @@ export async function GET(request: NextRequest) {
     // Rank overall by revenue (Top 14)
     const rankByRevenue = [...overallStats].sort((a, b) => b.totalRevenue - a.totalRevenue).slice(0, 14);
 
-    console.log('Overall rank by usage:', rankByUsage);
-    console.log('Overall rank by revenue:', rankByRevenue);
-    console.log('Branch statistics with names:', branchStatsArray);
-    console.log('Branch summary:', branchSummary);
-    console.log('=== STATISTICS DEBUG END ===');
 
     // Return the statistics
     return NextResponse.json({
@@ -228,9 +217,7 @@ export async function POST(request: NextRequest) {
     // Get filter parameters - all are optional
     const { createdBy, startDate, endDate, branchId } = body;
     
-    console.log('=== POST STATISTICS DEBUG START ===');
-    console.log('Request body:', body);
-
+  
     // Prepare the filter object - start with empty object
     const filter: Query = {};
 
@@ -272,7 +259,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log('Final filter:', filter);
 
     // If no filters are applied, use empty match (get all documents)
     const matchStage = Object.keys(filter).length > 0 ? { $match: filter } : { $match: {} };
@@ -313,9 +299,7 @@ export async function POST(request: NextRequest) {
       },
     ]);
 
-    console.log('Credit Stats:', creditStats);
-    console.log('Invoice Stats:', invoiceStats);
-
+ 
     // Combine statistics from both sources
     const combinedStats = [...invoiceStats, ...creditStats];
 
@@ -344,7 +328,6 @@ export async function POST(request: NextRequest) {
       return acc;
     }, []);
 
-    console.log('Merged stats:', mergedStats);
 
     // Get overall statistics (all branches combined)
     const overallStats = mergedStats.reduce((acc, curr) => {
@@ -405,13 +388,7 @@ export async function POST(request: NextRequest) {
     // Rank by revenue
     const rankByRevenue = [...overallStats].sort((a, b) => b.totalRevenue - a.totalRevenue);
 
-    console.log('Final results:', {
-      rankByUsage: rankByUsage.length,
-      rankByRevenue: rankByRevenue.length,
-      branchStats: branchStatsArray.length
-    });
-    console.log('=== POST STATISTICS DEBUG END ===');
-
+   
     // Return the rankings
     return NextResponse.json({
       success: true,

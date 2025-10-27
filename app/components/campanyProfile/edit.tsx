@@ -177,7 +177,6 @@ export default function EditCompanyProfileForm() {
     }
 
     setIsSubmitting(true);
-    console.log("Submitting form data:", formData);
 
     try {
       const response = await fetch(`/api/CompanyProfile/${companyId}`, {

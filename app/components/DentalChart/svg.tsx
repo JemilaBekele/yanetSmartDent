@@ -86,10 +86,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
   const handleEraserAction = useCallback((x: number, y: number) => {
     if (rootLayers.length === 0) return;
 
-    console.log('=== ERASER ACTION ===');
-    console.log('Cursor position:', { x, y });
-    console.log('Total layers:', rootLayers.length);
-
     // Method 1: Remove ANY layer that has points within a large radius
     const layersToRemove: string[] = [];
     const ERASER_RADIUS = brushSize * 3; // Large detection area
@@ -117,7 +113,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
 
     // Method 2: If no layers found with point detection, use bounding box fallback
     if (layersToRemove.length === 0) {
-      console.log('Trying bounding box detection...');
       
       for (let i = rootLayers.length - 1; i >= 0; i--) {
         const layer = rootLayers[i];
@@ -144,14 +139,12 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
     if (layersToRemove.length === 0 && rootLayers.length > 0) {
       const mostRecentLayer = rootLayers[rootLayers.length - 1];
       layersToRemove.push(mostRecentLayer.id);
-      console.log(`🔄 Removing most recent layer as fallback: ${mostRecentLayer.id}`);
     }
 
     // FINALLY: Remove the identified layers
     if (layersToRemove.length > 0) {
       const updatedLayers = rootLayers.filter(layer => !layersToRemove.includes(layer.id));
-      console.log(`🎯 SUCCESS: Removing ${layersToRemove.length} layer(s)`);
-      console.log(`Layers: ${rootLayers.length} → ${updatedLayers.length}`);
+  
       onRootLayerUpdate(toothNumber, updatedLayers);
     } else {
       console.log('❌ NO layers could be identified for removal');
@@ -264,7 +257,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
 
   // Clear all drawings
   const handleClearAll = useCallback(() => {
-    console.log('🗑️ Clearing ALL paintings');
     onRootLayerUpdate(toothNumber, []);
   }, [toothNumber, onRootLayerUpdate]);
 
@@ -464,8 +456,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
 
   // Debug function to log layer details
   const handleDebugLayers = () => {
-    console.log('=== DEBUG LAYERS ===');
-    console.log('Current layers count:', rootLayers.length);
     rootLayers.forEach((layer, index) => {
       console.log(`Layer ${index}:`, {
         id: layer.id,

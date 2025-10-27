@@ -1,5 +1,6 @@
 "use client";
 
+import AddDentalChartViewer from '@/app/components/DentalChart/add/bb';
 import MedicalFindingForm from '@/app/components/medicaldata/medicaldata/medicalhistory/add/addmedical'
 import { Suspense } from 'react';
 // Import Spinner component
@@ -17,6 +18,8 @@ export default function Home({ params }: MedicalFindingFormProps) {
     <div >
 
 <Suspense fallback={<div>Loading...</div>}>
+                <AddDentalChartViewer params={params} />
+
       <MedicalFindingForm params={params} />
       </Suspense>
     </div>

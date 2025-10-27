@@ -12,11 +12,9 @@ export async function PATCH(request: NextRequest) {
     // Ensure the request contains the necessary user object
     if (typeof request === "object" && request !== null && "user" in request) {
       const user = (request as { user: { id: string; username: string } }).user;
-      console.log("User Data:", user);
 
       // Parse the request body
       const { CreditId, currentPayment } = await request.json();
-console.log(CreditId)
       // Validate the payment amount
       const paymentAmount = Number(currentPayment);
       if (isNaN(paymentAmount) || paymentAmount <= 0) {

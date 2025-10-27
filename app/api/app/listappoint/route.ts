@@ -50,7 +50,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    console.log('Initial user object:', user);
 
     // Fetch the complete user with branch information from database
     const fullUser = await User.findById(user.id).select('branch').exec();
@@ -58,9 +57,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log('Full user with branch:', fullUser);
-    console.log('User branch:', fullUser.branch);
-    console.log('User branch type:', typeof fullUser.branch);
 
     // Initialize the query object
     const query: Query = {};
@@ -99,13 +95,11 @@ export async function POST(req: NextRequest) {
         userBranchId = fullUser.branch;
       }
       
-      console.log('Converted user branch ID:', userBranchId);
       query.branch = userBranchId 
     } else {
       console.log('No branch found for user, will return all appointments');
     }
 
-    console.log('Final query:', JSON.stringify(query, null, 2));
 
     // Find appointments that match the query and status
     const appointments = await Appointment.find({
@@ -113,7 +107,6 @@ export async function POST(req: NextRequest) {
       status: 'Scheduled'
     }).populate('patientId.id').exec();
 
-    console.log('Found appointments:', appointments.length);
 
     // Return the response with the found appointments
     return NextResponse.json({
@@ -147,7 +140,6 @@ export async function GET(req: NextRequest) {
         await Branch.aggregate([{ $sample: { size: 1 } }]);
     
 
-    console.log('GET - Initial user object:', user);
 
     // Fetch the complete user with branch information from database
     const fullUser = await User.findById(user.id).select('branch').exec();
@@ -155,9 +147,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log('GET - Full user with branch:', fullUser);
-    console.log('GET - User branch:', fullUser.branch);
-    console.log('GET - User branch type:', typeof fullUser.branch);
 
     // Build query based on user's branch
     const query: any = {
@@ -177,13 +166,11 @@ export async function GET(req: NextRequest) {
         userBranchId = fullUser.branch;
       }
       
-      console.log('GET - Converted user branch ID:', userBranchId);
       query.branch =userBranchId 
     } else {
       console.log('GET - No branch found for user, will return all appointments');
     }
 
-    console.log('GET - Final query:', JSON.stringify(query, null, 2));
 
     // Find all appointments that are "Scheduled" and NOT from user's branch
     const appointments = await Appointment.find(query)
@@ -192,7 +179,6 @@ export async function GET(req: NextRequest) {
       .sort({ appointmentDate: 1 }) // Sort appointments by appointmentDate (ascending)
       .exec();
 
-    console.log('GET - Found appointments:', appointments.length);
     appointments.forEach((appt, index) => {
       console.log(`Appointment ${index + 1} branch:`, appt.branch);
     });

@@ -18,7 +18,6 @@ export async function PATCH(request: NextRequest) {
     const { creditId, ...data } = body; // Extract InvoiceId and the data to update
 
     if (!creditId) {
-        console.log('ddd')
       return NextResponse.json({ error: "creadit ID is required" }, { status: 400 });
      
     }

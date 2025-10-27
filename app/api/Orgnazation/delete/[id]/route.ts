@@ -12,7 +12,6 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   try {
     const { id } = params; // This is the patient ID to delete
     const patientId = id;
-console.log(patientId)
     // Parse the request body to get the organization ID
     const body = await request.json();
     const { recordId } = body;

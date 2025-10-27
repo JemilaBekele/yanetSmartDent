@@ -25,12 +25,10 @@ export async function GET(request: NextRequest) {
     );
 
     // Log the filtered organizations
-    console.log("Filtered Organizations:", filteredOrganizations);
 
     // Check patient data specifically:
     filteredOrganizations.forEach((organization) => {
-      console.log(`Organization: ${organization.organization}`);
-      console.log("Patients:");
+    
       organization.patient.forEach((patient: any) => {
         console.log(patient); // Log each patient's full data
       });

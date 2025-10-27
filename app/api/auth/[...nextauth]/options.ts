@@ -37,13 +37,11 @@ export const options: NextAuthOptions = {
             .exec() as UserType | null;
 
           if (foundUser) {
-            console.log("User found:", foundUser);
 
             // Ensure that password exists before comparing
             const match = await bcrypt.compare(credentials.password || "", foundUser.password);
 
             if (match) {
-              console.log("Password match successful");
               // Omit destructuring the password field since it's not needed
   
   const { _id, username, role, phone, image} = foundUser;

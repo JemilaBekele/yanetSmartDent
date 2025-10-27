@@ -16,11 +16,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const body = await req.json();
     let { status, notes } = body;
 
-    console.log('Incoming body:', body);
 
     // ✅ Normalize status
     const normalizedStatus = status?.toUpperCase();
-    console.log('Normalized status:', normalizedStatus);
 
     // ✅ Validate status
     if (!Object.values(WithdrawalStatus).includes(normalizedStatus)) {
@@ -51,7 +49,6 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     // ✅ If Approved → Only update status, no stock movement
     if (normalizedStatus === WithdrawalStatus.APPROVED) {
       // Just update the status, no stock movements
-      console.log('Withdrawal request approved - status updated only');
       await withdrawalRequest.save();
     }
 
@@ -115,7 +112,6 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
     // ✅ For other statuses (REJECTED, PENDING) → Just update status, no stock movements
     if ([WithdrawalStatus.REJECTED, WithdrawalStatus.PENDING].includes(normalizedStatus)) {
-      console.log(`Status updated to ${normalizedStatus} - no stock movements`);
       await withdrawalRequest.save();
     }
 

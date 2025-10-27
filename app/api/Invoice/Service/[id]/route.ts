@@ -73,7 +73,6 @@ export async function GET(
     }
 const categoryId=id
     // Log `categoryId` for debugging
-    console.log("categoryId received:", categoryId);
 
     // Validate the `categoryId`
     if (!categoryId) {

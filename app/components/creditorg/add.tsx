@@ -33,7 +33,6 @@ const AddServiceModal: React.FC<AddServiceModalProps> = ({ isOpen, onClose, onSu
           try {
             const response = await axios.get("/api/app/org");
       
-            console.log("Fetched organizations:", response.data);
       
             if (response.data && Array.isArray(response.data.data)) {
               const normalizedData = response.data.data.map((org: ApiOrganization) => ({

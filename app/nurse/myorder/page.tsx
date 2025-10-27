@@ -35,7 +35,6 @@ const Home: React.FC = () => {
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        console.log("Fetched Orders Data:", data);
 
         if (!data || !data.orders || !Array.isArray(data.orders)) {
           throw new Error("Invalid data format received: 'orders' key is missing or not an array.");
@@ -69,7 +68,6 @@ const Home: React.FC = () => {
   }, []);
 
   const handleEditOrder = (orderId: string) => {
-    console.log("Editing Order ID:", orderId);
     setSelectedOrderId(orderId);
     setModalOpen(true);
   };

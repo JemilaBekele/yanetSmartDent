@@ -742,11 +742,7 @@ const handleSurfaceToothClick = (toothNumber: number) => {
     const note = existingTooth?.generalNote || existingTooth?.notes || "";
     setGeneralNote(note);
     
-    console.log("Selected tooth:", {
-      tooth: newSelectedTooth,
-      existingNote: note,
-      toothData: existingTooth
-    });
+    
   } else {
     setGeneralNote("");
   }
@@ -804,12 +800,7 @@ const handleSurfaceToothClick = (toothNumber: number) => {
 
     setTeethData(updatedTeeth);
     
-    console.log("Surface click:", {
-      tooth: toothNumber,
-      surface: surfaceName,
-      condition: conditionToApply,
-      color: TOOTH_CONDITIONS[conditionToApply as keyof typeof TOOTH_CONDITIONS]?.colorCode
-    });
+   
   };
 
   const getSurfaceCondition = (toothNumber: number, surfaceName: string) => {
@@ -961,11 +952,7 @@ const handleGeneralNoteChange = (newNote: string) => {
     
     setTeethData(updatedTeeth);
     
-    console.log("Note updated for tooth:", {
-      tooth: selectedTooth,
-      note: newNote,
-      teethData: updatedTeeth.find(t => t.toothNumber === selectedTooth)
-    });
+   
   }
 };
   // Custom painting handlers
@@ -1026,15 +1013,7 @@ const handleSave = async () => {
         }
       }));
 
-    console.log("Saving notes:", {
-      totalNotes: notes.length,
-      notesContent: notes,
-      allTeeth: teethData.map(t => ({
-        tooth: t.toothNumber, 
-        hasNote: !!t.generalNote,
-        note: t.generalNote
-      }))
-    });
+ 
 
     const saveData = {
       teeth: teethData, // This now contains the updated notes
@@ -1051,13 +1030,7 @@ const handleSave = async () => {
       changeHistory: []
     };
 
-    console.log("Saving data to backend:", {
-      teethCount: teethData.length,
-      customRootLayersCount: customRootLayers.length,
-      notesCount: notes.length,
-      hasNotes: notes.length > 0,
-      saveDataKeys: Object.keys(saveData)
-    });
+    
 
     const response = await fetch(`/api/DentalChart/${patientId}`, {
       method: "POST",
@@ -1075,7 +1048,6 @@ const handleSave = async () => {
     setFormMessage("Dental chart saved successfully!");
     setFormType("success");
 
-    console.log("Save result:", result);
 
     setTimeout(() => {
       if (role === "doctor") {
@@ -1094,7 +1066,6 @@ const handleSave = async () => {
 
   // Debug function
   const debugDataStructure = () => {
-    console.log("Current Custom Root Layers:", customRootLayers);
     customRootLayers.forEach(toothLayer => {
       toothLayer.layers.forEach((layer: RootLayer, index: number) => {
         console.log(`Tooth ${toothLayer.toothNumber}, Layer ${index}:`, {

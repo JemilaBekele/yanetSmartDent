@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
   try {
     if (typeof request === 'object' && request !== null && 'user' in request) {
       const user = (request as { user: { id: string; username: string } }).user;
-      console.log("User Data:", user);
 
       const reqBody = await request.json();
       const { patientId, assignedDoctorId, status } = reqBody;
@@ -53,7 +52,6 @@ export async function POST(request: NextRequest) {
         
         // Also delete all associated Age documents for this patient
         
-        console.log(`Deleted ${patient.Order.length} existing orders for patient: ${patientId}`);
         
         // Clear the Order array from patient
         patient.Order = [];

@@ -28,8 +28,6 @@ export async function POST(
     }
 
     // Log `categoryId` and `orgId` for debugging
-    console.log("categoryId received:", id);
-    console.log("organizationId received:", orgId);
     await Category.find()
     // Fetch services based on `categoryId` and `organizationid`
     const services = await OrgService.find({ 

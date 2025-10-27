@@ -135,7 +135,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     // Optional: Delete associated items
     await PurchaseItem.deleteMany({ purchaseId: id });
 
-    console.log(`Purchase ${id} deleted by user ${user.username} (${user.id})`);
 
     return NextResponse.json({ message: 'Purchase deleted successfully', purchase: deletedPurchase }, { status: 200 });
   } catch (error) {

@@ -61,7 +61,6 @@ const UnfinishedDentalLabForms: React.FC = () => {
         }
         
         const data = await response.json();
-        console.log("Fetched Patients with Unfinished Forms Data:", data);
         if (data.success) {
           setPatients(data.data);
           setFilteredPatients(data.data);

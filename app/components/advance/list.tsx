@@ -68,7 +68,6 @@ export const AdvancePaymentModal: React.FC<AdvancePaymentModalProps> = ({
         setFetchError(null);
         
         const response = await axios.get(`/api/patient/registerdata/${patientId}`);
-        console.log('API Response:', response.data);
         
         if (response.data) {
           const patient = response.data;

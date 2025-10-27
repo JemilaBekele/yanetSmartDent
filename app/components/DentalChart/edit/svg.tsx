@@ -476,9 +476,6 @@ const SVGPainter: React.FC<SVGPainterProps> = ({
         lastPoint: layer.points?.[layer.points.length - 1]
       });
     });
-    console.log('Eraser mode:', isErasing);
-    console.log('Brush size:', brushSize);
-    console.log('==================');
   };
 
   // UPDATED: Get root type description for display

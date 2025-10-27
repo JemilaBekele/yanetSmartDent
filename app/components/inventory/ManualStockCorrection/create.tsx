@@ -97,11 +97,9 @@ export default function CreateStockRequestPage() {
   const fetchPersonalStock = async () => {
     try {
       const response = await fetch('/api/inventory/stock/usercheck');
-      console.log(response)
       const data = await response.json();
       if (response.ok) {
         setPersonalStock(data.data || []);
-        console.log(data.data);
       } else {
         throw new Error(data.message || 'Failed to fetch personal stock');
       }

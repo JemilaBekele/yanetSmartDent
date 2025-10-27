@@ -8,7 +8,6 @@ import Branch from '@/app/(models)/branch';
 
 export async function GET(request: NextRequest) {
   await authorizedMiddleware(request);
-  console.log('GET request received');
   
   try {
     // Get user from request
@@ -24,7 +23,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    console.log('User branch:', fullUser.branch);
 
     // Get tomorrow's date range
     const today = new Date();
@@ -57,11 +55,9 @@ export async function GET(request: NextRequest) {
         userBranchId = fullUser.branch;
       }
       
-      console.log('Converted user branch ID:', userBranchId);
       query.branch = userBranchId; // Filter appointments by user's branch
     }
 
-    console.log('Final query:', JSON.stringify(query, null, 2));
 
     // Find all scheduled appointments for tomorrow that match the user's branch
     const tomorrowAppointments = await Appointment.find(query)

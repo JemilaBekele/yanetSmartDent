@@ -20,7 +20,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, invoiceId }) => {
         return;
       }
 
-      console.log("Fetching details for invoice ID:", invoiceId);
 
       setLoading(true);
       setError(null);

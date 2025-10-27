@@ -149,7 +149,6 @@ const FetchInvoices = () => {
       });
 
       const data = await response.json();
-      console.log(data.data.history)
      
       if (data.success) {
         setInvoices(data.data.history || []);

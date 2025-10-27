@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
       ...order.toObject(),
       patient: order.patientId.id, // Populated patient data
     }));
-console.log("jemu",ordersWithPatients)
     return NextResponse.json({
       message: "Patient profiles retrieved successfully",
       success: true,

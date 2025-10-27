@@ -19,7 +19,6 @@ export async function DELETE(
 ) {
   // Authorization check
   const { id } = params;
-console.log(id)
   if (!id) {
     return NextResponse.json({ error: "Patient ID is required" }, { status: 400 });
   }
@@ -75,7 +74,6 @@ export async function GET(
     if (!finding) {
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
-console.log(finding)
     return NextResponse.json({
       message: "Image retrieved successfully",
       success: true,

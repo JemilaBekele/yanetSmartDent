@@ -52,7 +52,6 @@ const CardPage: React.FC<PatientDetailsProps> = ({ params }) => {
         const data = await response.json();
         if (response.ok) {
           setHealthInfo(data.data || []);
-          console.log('Fetched card data with branches:', data.data);
         } else {
           setError(data.error || "Error fetching health information");
         }

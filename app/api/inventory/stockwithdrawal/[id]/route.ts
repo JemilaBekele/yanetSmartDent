@@ -132,9 +132,7 @@ export async function DELETE(
       );
     }
 
-    console.log(
-      `StockWithdrawalRequest ${id} deleted by user ${user.username} (${user.id})`
-    );
+   
 
     return NextResponse.json(
       {

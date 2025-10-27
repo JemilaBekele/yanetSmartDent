@@ -75,7 +75,6 @@ const FilterCredits: NextPage = () => {
   const fetchOrganizations = async () => {
     try {
       const response = await axios.get('/api/Orgnazation/findall');
-      console.log(response.data);
       if (response.status === 200) {
         const orgData = response.data.data;
 
@@ -109,8 +108,6 @@ const FilterCredits: NextPage = () => {
 
     try {
       const response = await axios.post('/api/Creadit/report', requestData);
-      console.log(response)
-      console.log(response.data)
       if (response.status === 200) {
         setCredits(response.data);
         const total = response.data.reduce((sum: number, credit: Credit) => sum + credit.currentPayment.amount, 0);

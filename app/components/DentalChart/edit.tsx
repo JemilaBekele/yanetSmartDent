@@ -747,11 +747,7 @@ const handleGeneralNoteChange = (newNote: string) => {
     
     setTeethData(updatedTeeth);
     
-    console.log("Note updated for tooth:", {
-      tooth: selectedTooth,
-      note: newNote,
-      teethData: updatedTeeth.find(t => t.toothNumber === selectedTooth)
-    });
+   
   }
 };
 
@@ -1035,15 +1031,7 @@ const handleSave = async () => {
         }
       }));
 
-    console.log("Saving notes:", {
-      totalNotes: notes.length,
-      notesContent: notes,
-      allTeeth: teethData.map(t => ({
-        tooth: t.toothNumber, 
-        hasNote: !!t.generalNote,
-        note: t.generalNote
-      }))
-    });
+   
 
     const updateData = {
       teeth: teethData, // This now contains the updated notes
@@ -1059,13 +1047,7 @@ const handleSave = async () => {
       notes: notes // Include the extracted notes
     };
 
-    console.log("Updating dental chart:", {
-      dentalChartId,
-      teethCount: teethData.length,
-      customRootLayersCount: customRootLayers.length,
-      notesCount: notes.length,
-      hasNotes: notes.length > 0
-    });
+
 
     const response = await fetch(`/api/DentalChart/detail/${dentalChartId}`, {
       method: "PATCH",
@@ -1083,7 +1065,6 @@ const handleSave = async () => {
     setFormMessage("Dental chart updated successfully!");
     setFormType("success");
 
-    console.log("Update result:", result);
 
     setTimeout(() => {
       if (role === "doctor") {

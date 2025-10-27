@@ -45,7 +45,6 @@ export async function POST(req: NextRequest) {
 
     // Alternative Patient Search
     if (patientId) {
-      console.log(`Searching for individual patient by ID: ${patientId}`);
       if (!mongoose.Types.ObjectId.isValid(patientId)) {
         return NextResponse.json({ error: 'Invalid patient ID format' }, { status: 400 });
       }
@@ -54,7 +53,6 @@ export async function POST(req: NextRequest) {
 
     // Filter by organization and retrieve associated patient IDs
     if (organization) {
-      console.log(`Searching for organization by ID: ${organization}`);
 
       if (!mongoose.Types.ObjectId.isValid(organization)) {
         return NextResponse.json({ error: 'Invalid organization ID format' }, { status: 400 });
@@ -62,14 +60,11 @@ export async function POST(req: NextRequest) {
 
       const org = await Organization.findOne({ _id: organization }).select('_id patient');
       if (!org) {
-        console.log('No organization found with the given ID.');
         return NextResponse.json({ message: 'Organization not found', success: false }, { status: 404 });
       }
 
-      console.log(`Organization found with ID: ${org._id}`);
 
       if (!org.patient || org.patient.length === 0) {
-        console.log('No patients linked to this organization.');
         return NextResponse.json({ message: 'No patients linked to this organization.', success: false }, { status: 200 });
       }
 
@@ -82,7 +77,6 @@ export async function POST(req: NextRequest) {
       }
 
       patientIds = [...patientIds, ...orgPatientIds];
-      console.log(`Patients found with IDs: ${patientIds}`);
     }
 
     // Apply patient filter
@@ -90,7 +84,6 @@ export async function POST(req: NextRequest) {
       query['Credit.customerName.id'] = { $in: patientIds };
     }
 
-    console.log('Executing CreditHistory Query:', JSON.stringify(query, null, 2));
 
     // Fetch credits and populate required fields
     const credits = await CreditHistory.find(query)
@@ -132,7 +125,6 @@ export async function POST(req: NextRequest) {
     }));
 
     // Log formatted data
-    console.log('Formatted Credits Data:', JSON.stringify(formattedCredits, null, 2));
 
     return NextResponse.json({
       message: 'Credits retrieved successfully',

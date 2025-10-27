@@ -39,7 +39,6 @@ const PatientsPage: React.FC = () => {
           },
         });
     
-        console.log('Response:', response); // Log the response object
     
         // Check if the response is ok (status code 200-299)
         if (!response.ok) {
@@ -47,10 +46,8 @@ const PatientsPage: React.FC = () => {
         }
     
         const data: Patient[] = await response.json();
-        console.log('Patient Data:', data); // Log the parsed data
     
         if (data.length === 0) {
-          console.log('No patients found');
           return; // Early return if no patients
         }
     

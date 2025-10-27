@@ -122,7 +122,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       if (!deletedProduct) return NextResponse.json({ message: 'Product not found' }, { status: 404 });
 
       // Optional: Log the deletion activity
-      console.log(`Product ${id} deleted by user ${user.username} (${user.id})`);
 
       return NextResponse.json({ message: 'Product deleted successfully', product: deletedProduct }, { status: 200 });
     } else {
