@@ -13,7 +13,7 @@ type PatientDetailsProps = {
 const CreateCardPage: React.FC<PatientDetailsProps> = ({ params }) => {
   const patientId = params.id;
   const { data: session } = useSession();  // Patient ID from URL
-  const [cardprice, setCardPrice] = useState<string>("800"); // Default value set to 300
+  const [cardprice, setCardPrice] = useState<string>("600"); // Default value set to 300
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
@@ -42,7 +42,7 @@ const CreateCardPage: React.FC<PatientDetailsProps> = ({ params }) => {
       const data = await response.json();
       if (response.ok) {
         setMessage("Card created successfully!");
-        setCardPrice("300");
+        setCardPrice("0");
         {role === 'admin' && ( // Reset to default
         router.push(`/admin/card/all/${patientId}`))}
         {role === 'reception' && ( // Reset to default

@@ -269,15 +269,7 @@ const CardPage: React.FC<PatientDetailsProps> = ({ params }) => {
               </div>
             </div>
 
-            {/* Role-based information banner */}
-            {role === "reception" && (
-              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                <p className="text-yellow-800 text-sm">
-                  <strong>Note for Reception:</strong> You can only edit or delete cards created within the last 24 hours.
-                  Older cards are locked for data integrity.
-                </p>
-              </div>
-            )}
+
 
             {/* Error Messages */}
             {error && (

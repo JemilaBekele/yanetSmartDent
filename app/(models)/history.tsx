@@ -21,7 +21,7 @@ const HistorySchema = new mongoose.Schema({
     },
     receipt: {
       type: Boolean,
-      default: false,
+      default: true,
     },  
       customerName: {
         id: {

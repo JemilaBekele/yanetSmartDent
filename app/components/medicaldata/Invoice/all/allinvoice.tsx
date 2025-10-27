@@ -323,7 +323,17 @@ doc.setDrawColor(255, 255, 150); // Yellow
     doc.save(`Invoice_${patientData.firstname}.pdf`);
   };
   
-  const handleDelete = async (invoiceId: string) => {
+  const handleDelete = async (invoiceId: string,createdAt:string) => {
+      if (role === 'doctor') {
+    const invoiceCreationTime = new Date(createdAt).getTime();
+    const currentTime = new Date().getTime();
+    const twoHoursInMs = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+    
+    if (currentTime - invoiceCreationTime > twoHoursInMs) {
+      toast.error("Doctors can only delete invoices within 1 hours of creation.");
+      return;
+    }
+  }
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this invoice? This action cannot be undone."
     );
@@ -432,12 +442,12 @@ doc.setDrawColor(255, 255, 150); // Yellow
                           className="text-blue-500 pr-4 pl-4 cursor-pointer hover:text-blue-700"
                           aria-label="Edit Invoice"
                         />
-                        {(role === 'admin') && (
-                          <DeleteOutlined
-                            onClick={() => handleDelete(invoice._id)}
-                            className="text-red-500 cursor-pointer hover:text-red-700"
-                            aria-label="Delete Invoice"
-                          />
+{(role === 'admin' || role === 'doctor') && (
+                        <DeleteOutlined
+  onClick={() => handleDelete(invoice._id, invoice.createdAt)}
+  className="text-red-500 cursor-pointer hover:text-red-700"
+  aria-label="Delete Invoice"
+/>
                         )}
 
                         <div>                   <button

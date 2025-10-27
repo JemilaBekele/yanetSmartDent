@@ -29,7 +29,7 @@ export async function PATCH(request: NextRequest) {
       invoice.totalpaid += currentpayment; // Add the current payment amount to totalpaid
       invoice.balance = invoice.totalAmount - invoice.totalpaid; // Update the balance
       invoice.currentpayment.amount = 0; 
-      invoice.currentpayment.receipt = receiptvalue  // Set the current payment amount
+      invoice.currentpayment.receipt = true  // Set the current payment amount
       invoice.currentpayment.confirm = true; // Confirm the payment
       invoice.currentpayment.date = new Date(); // Update the date to now
 
@@ -44,7 +44,7 @@ export async function PATCH(request: NextRequest) {
         Invoice: {
           id: invoice._id,
           amount: currentpayment,
-          receipt: receiptvalue,
+          receipt: true,
           customerName: {
             id: invoice.customerName.id,
             username: invoice.customerName.username,

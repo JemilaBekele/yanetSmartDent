@@ -35,7 +35,7 @@ const UnconfirmedInvoices: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState<string>("");
   const [currentPaymentAmount, setCurrentPaymentAmount] = useState<number>(0);
-  const [currentReceipt, setCurrentReceipt] = useState<boolean>(false);
+  const [currentReceipt, setCurrentReceipt] = useState<boolean>(true);
   const [serviceDetails, setServiceDetails] = useState<{ serviceName: string; price: number }[]>([]);
 
   // Fetch invoices function
