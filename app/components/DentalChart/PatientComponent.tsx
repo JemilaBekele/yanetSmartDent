@@ -103,100 +103,108 @@ const PatientComponent: React.FC<PatientDetailsProps> = ({ params }) => {
   if (error) return <div className="text-red-500">{error}</div>;
   if (!patient) return <div>Patient not found</div>;
 
+  return (
+    <div className="container mx-auto p-4 space-y-6">
+      {/* Main Content - Three Columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle className="flex justify-between items-center">
+              Patient Details
+              {(role === "admin" || role === "doctor") && (
+                <Link
+                  href={`/${role}/medicaldata/medicalhistory/all/${patientId}`}
+                  className="bg-green-500 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-green-600 text-sm sm:text-base w-full sm:w-auto text-center"
+                >
+                  Go to Medical Record
+                </Link>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ScrollArea className="h-64">
+              <div className="space-y-1">
+                {renderDetail('Name', patient.firstname)}
+                {renderDetail('Age', patient.age)}
+                {renderDetail('Card No', patient.cardno)}
+                {renderDetail('Sex', patient.sex)}
+                {renderDetail('Town', patient.Town)}
+                {renderDetail('K/K', patient.KK)}
+                {renderDetail('House No', patient.HNo)}
+                {renderDetail('Region', patient.Region)}
+                {renderDetail('Woreda', patient.Woreda)}
+                {renderDetail('Description', patient.description)}
+              </div>
+            </ScrollArea>
+          </CardContent>
+        </Card>
 
+        <Card className="lg:col-span-1">
+          <CardHeader><CardTitle>Health Information</CardTitle></CardHeader>
+          <CardContent>
+            <ScrollArea className="h-64">
+              {patient.Healthinfo?.length > 0 ? (
+                <div className="space-y-4">
+                  {patient.Healthinfo.map((info) => {
+                    const fields = [
+                      { key: "bloodgroup", label: "Blood Group", value: info.bloodgroup },
+                      { key: "height", label: "Height", value: info.height },
+                      { key: "weight", label: "Weight", value: info.weight },
+                      { key: "Hypertension", label: "Hypertension", value: info.Hypertension },
+                      { key: "Hypotension", label: "Hypotension", value: info.Hypotension },
+                      { key: "Tuberculosis", label: "Tuberculosis", value: info.Tuberculosis },
+                      { key: "Diabetics", label: "Diabetics", value: info.Diabetics },
+                      { key: "Hepatitis", label: "Hepatitis", value: info.Hepatitis },
+                      { key: "Epilepsy", label: "Epilepsy", value: info.Epilepsy },
+                      { key: "BleedingTendency", label: "Bleeding Tendency", value: info.BleedingTendency },
+                      { key: "Medication", label: "Medication", value: info.Medication },
+                      { key: "habits", label: "Habits", value: info.habits },
+                      { key: "description", label: "Description", value: info.description },
+                    ].filter(field => field.value);
 
- return (
-  <div className="container mx-auto p-4 space-y-6">
-    {/* Main Content - Three Columns */}
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <Card className="lg:col-span-1">
-        <CardHeader><CardTitle>Patient Details</CardTitle></CardHeader>
-        <CardContent>
-          <ScrollArea className="h-64">
-            <div className="space-y-1">
-                            {renderDetail('Name', patient.firstname)}
-              {renderDetail('Age', patient.age)}
-              {renderDetail('Card No', patient.cardno)}
-              {renderDetail('Sex', patient.sex)}
-              {renderDetail('Town', patient.Town)}
-              {renderDetail('K/K', patient.KK)}
-              {renderDetail('House No', patient.HNo)}
-              {renderDetail('Region', patient.Region)}
-              {renderDetail('Woreda', patient.Woreda)}
-              {renderDetail('Description', patient.description)}
-            </div>
-          </ScrollArea>
-        </CardContent>
-      </Card>
+                    const primaryFields = fields.slice(0, 4);
+                    const additionalFields = fields.slice(4);
+                    const hasAdditionalFields = additionalFields.length > 0;
+                    const isExpanded = expandedAllergies[info._id];
 
-      <Card className="lg:col-span-1">
-        <CardHeader><CardTitle>Health Information</CardTitle></CardHeader>
-        <CardContent>
-          <ScrollArea className="h-64">
-            {patient.Healthinfo?.length > 0 ? (
-              <div className="space-y-4">
-                {patient.Healthinfo.map((info) => {
-                  const fields = [
-                    { key: "bloodgroup", label: "Blood Group", value: info.bloodgroup },
-                    { key: "height", label: "Height", value: info.height },
-                    { key: "weight", label: "Weight", value: info.weight },
-                    { key: "Hypertension", label: "Hypertension", value: info.Hypertension },
-                    { key: "Hypotension", label: "Hypotension", value: info.Hypotension },
-                    { key: "Tuberculosis", label: "Tuberculosis", value: info.Tuberculosis },
-                    { key: "Diabetics", label: "Diabetics", value: info.Diabetics },
-                    { key: "Hepatitis", label: "Hepatitis", value: info.Hepatitis },
-                    { key: "Epilepsy", label: "Epilepsy", value: info.Epilepsy },
-                    { key: "BleedingTendency", label: "Bleeding Tendency", value: info.BleedingTendency },
-                    { key: "Medication", label: "Medication", value: info.Medication },
-                    { key: "habits", label: "Habits", value: info.habits },
-                    { key: "description", label: "Description", value: info.description },
-                  ].filter(field => field.value);
-
-                  const primaryFields = fields.slice(0, 4);
-                  const additionalFields = fields.slice(4);
-                  const hasAdditionalFields = additionalFields.length > 0;
-                  const isExpanded = expandedAllergies[info._id];
-
-                  return (
-                    <div key={info._id} className="border rounded-lg p-3">
-                      <div className="grid grid-cols-2 gap-2">
-                        {primaryFields.map((field) => (
-                          <div key={field.key}>
-                            <p className="text-xs font-medium text-gray-500">{field.label}</p>
-                            <p className="text-sm">{field.value}</p>
-                          </div>
-                        ))}
-                      </div>
-                      {isExpanded && (
-                        <div className="grid grid-cols-2 gap-2 mt-2">
-                          {additionalFields.map((field) => (
+                    return (
+                      <div key={info._id} className="border rounded-lg p-3">
+                        <div className="grid grid-cols-2 gap-2">
+                          {primaryFields.map((field) => (
                             <div key={field.key}>
                               <p className="text-xs font-medium text-gray-500">{field.label}</p>
                               <p className="text-sm">{field.value}</p>
                             </div>
                           ))}
                         </div>
-                      )}
-                      {hasAdditionalFields && (
-                        <Button variant="ghost" size="sm" className="mt-2 h-6 text-xs" onClick={() => setExpandedAllergies(prev => ({ ...prev, [info._id]: !prev[info._id] }))}>
-                          {isExpanded ? "Show Less" : "Show More"}
-                        </Button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-sm">No health information available</p>
-            )}
-          </ScrollArea>
-        </CardContent>
-      </Card>
-
-    
+                        {isExpanded && (
+                          <div className="grid grid-cols-2 gap-2 mt-2">
+                            {additionalFields.map((field) => (
+                              <div key={field.key}>
+                                <p className="text-xs font-medium text-gray-500">{field.label}</p>
+                                <p className="text-sm">{field.value}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {hasAdditionalFields && (
+                          <Button variant="ghost" size="sm" className="mt-2 h-6 text-xs" onClick={() => setExpandedAllergies(prev => ({ ...prev, [info._id]: !prev[info._id] }))}>
+                            {isExpanded ? "Show Less" : "Show More"}
+                          </Button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No health information available</p>
+              )}
+            </ScrollArea>
+          </CardContent>
+        </Card>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default PatientComponent;

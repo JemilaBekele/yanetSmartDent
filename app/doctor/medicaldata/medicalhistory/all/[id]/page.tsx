@@ -1,7 +1,6 @@
 "use client";
 
 
-import DentalChartViewer from '@/app/components/DentalChart/bb';
 import MedicalFindingForm from '@/app/components/medicaldata/medicaldata/medicalhistory/all/allmedical'
 import { Suspense } from 'react';
 // Import Spinner component
@@ -19,7 +18,6 @@ export default function Home({ params }: MedicalFindingFormProps) {
 
     <div >
        <Suspense >
-               <DentalChartViewer params={params} />
         
        <MedicalFindingForm params={params} />
        

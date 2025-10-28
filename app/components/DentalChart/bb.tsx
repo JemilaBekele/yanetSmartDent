@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import PatientComponent from "./PatientComponent";
 
 // ... (all your existing interfaces remain the same)
 interface ToothSurface {
@@ -1759,8 +1760,9 @@ const renderCombinedChart = () => {
   };
 
 return (
-  <div className="flex m-8">
+   <div className="flex m-8">
     <div className="flex-grow md:ml-64 container mx-auto p-6">
+      <PatientComponent params={params} />
       
       {!hasDentalChart ? (
         <div className="bg-white p-10 rounded-lg shadow-lg border-2 border-gray-300 text-center">

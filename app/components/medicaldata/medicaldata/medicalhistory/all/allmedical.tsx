@@ -1023,6 +1023,14 @@ export default function MedicalFindingForm({ params }: MedicalFindingFormProps) 
             <h1 className="text-xl sm:text-2xl font-bold">Dental Record</h1>
             {(role === "admin" || role === "doctor") && (
               <Link
+                href={`/${role}/DentalChart/${patientId}`}
+                className="bg-green-500 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-green-600 text-sm sm:text-base w-full sm:w-auto text-center"
+              >
+                view Dental chart
+              </Link>
+            )}
+               {(role === "admin" || role === "doctor") && (
+              <Link
                 href={`/${role}/medicaldata/medicalhistory/add/${patientId}`}
                 className="bg-green-500 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-green-600 text-sm sm:text-base w-full sm:w-auto text-center"
               >

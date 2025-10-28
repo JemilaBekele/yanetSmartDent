@@ -1085,9 +1085,9 @@ export default function ChildDentalChartEdit({ params }: DentalChartEditProps) {
 
       setTimeout(() => {
         if (role === "doctor") {
-              router.push(`/doctor/medicaldata/medicalhistory/all/${patientId}`);
+              router.push(`/doctor/DentalChart/${patientId}`);
       } else if (role === "admin") {
-        router.push(`/admin/medicaldata/medicalhistory/all/${patientId}`);
+        router.push(`/admin/DentalChart/${patientId}`);
         }
       }, 2000);
 
