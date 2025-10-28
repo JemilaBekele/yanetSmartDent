@@ -213,7 +213,7 @@ const LoginForm: React.FC = () => {
     const userRole = session.user?.role;
     switch (userRole) {
       case "admin":
-        router.push("/admin/CompanyProfile");
+        router.push("/admin");
         break;
       case "doctor":
         router.push("/doctor/CompanyProfile");
