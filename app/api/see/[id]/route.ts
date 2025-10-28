@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         return NextResponse.json({ error: "User ID is required" }, { status: 400 });
       }
   
-      const user = await User.findById({ _id: id });
+      const user = await User.findById({ _id: id }).populate('branch');
   
       if (!user) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
