@@ -5,7 +5,7 @@ import {  UserOutlined,ProjectOutlined,SolutionOutlined,FormOutlined,FundOutline
 
 const items = [
   { label: "Dashboard", icon: <ProjectOutlined/>, link: "/reception" },
-  { label: "CompanyProfile", icon: <ContainerOutlined/>, link: "/reception/CompanyProfile" },
+  { label: "Company Profile", icon: <ContainerOutlined/>, link: "/reception/CompanyProfile" },
   { label: "Register", icon: <FormOutlined />, link: "/reception/client/add" },
   { label: "Active Order", icon: <SolutionOutlined />, link: "/reception/activeorder" },
   { label: "Appointment", icon: <SolutionOutlined />, link: "/reception/listappoint" },

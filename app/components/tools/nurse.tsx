@@ -5,7 +5,7 @@ import {  UserOutlined,ProjectOutlined,SolutionOutlined ,TeamOutlined, Container
 
 const items = [
   { label: "Dashboard", icon: <ProjectOutlined/>, link: "/nurse" },
-          { label: "CompanyProfile", icon: <ContainerOutlined/>, link: "/nurse/CompanyProfile" },
+          { label: "Company Profile", icon: <ContainerOutlined/>, link: "/nurse/CompanyProfile" },
   { label: "My orders", icon: <TeamOutlined />, link: "/nurse/myorder" },
 
   { label: "ALL Active Orders", icon: <SolutionOutlined />, link: "/nurse/activeorder" },

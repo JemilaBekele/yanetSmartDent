@@ -5,13 +5,13 @@ import { ContainerOutlined, UserOutlined,FundOutlined, ProjectOutlined, TeamOutl
 
 const items= [
   { label: "Dashboard", icon: <ProjectOutlined/>, link: "/admin" },
-    { label: "CompanyProfile", icon: <ContainerOutlined/>, link: "/admin/CompanyProfile" },
+    { label: "Company Profile", icon: <ContainerOutlined/>, link: "/admin/CompanyProfile" },
       //  { label: "Procedure", icon: <FundOutlined />, link: "/admin/Procedure" },
 { label: "Branch", icon: <FundOutlined />, link: "/admin/Branch" },
   { label: "Register", icon: <SolutionOutlined />, link: "/admin/users/add" },
   { label: "Employees", icon: <TeamOutlined />, link: "/admin/users" },
   { label: "Patients", icon: <UserOutlined />, link: "/admin/Patient" },
-  { label: "All Patients", icon: <UserOutlined />, link: "/admin/allpatient" },
+  { label: "Branch Financial", icon: <UserOutlined />, link: "/admin/allpatient" },
   { label: "Medical Report", icon: <ContainerOutlined/>, link: "/admin/ortho" },
   { label: "Services", icon: <ContainerOutlined/>, link: "/admin/Services" },
     { label: "Expense", icon: <FundOutlined />, link: "/admin/expense/add" },

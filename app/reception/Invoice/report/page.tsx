@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import DataTable from "@/app/components/ui/TableComponent";
-
+import { User, Calendar, Search, AlertCircle, FileText, CreditCard, DollarSign, Download } from 'lucide-react';
 import Modal from "@/app/components/invoice/detailinvoice";
 import { EyeOutlined } from "@ant-design/icons";
 import * as XLSX from 'xlsx';
@@ -279,7 +279,7 @@ const RecFetchInvoices = () => {
       header: "Customer",
       key: "customerName.id.firstname" as keyof Invoice,
       render: (invoice: Invoice) =>
-        invoice?.Invoice?.customerName?.id?.firstname || 'N/A',
+        invoice?.Invoice?.customerName?.id?.firstname || '',
     },
     {
       header: "Amount",
@@ -289,12 +289,12 @@ const RecFetchInvoices = () => {
     {
       header: "Created By",
       key: "created.username" as keyof Invoice,
-      render: (invoice: Invoice) => `${invoice.Invoice.created?.username}` || 'N/A',
+      render: (invoice: Invoice) => `${invoice.Invoice.created?.username}` || '',
     },
     {
       header: "Created At",
       key: "createdAt" as keyof Invoice,
-      render: (invoice: Invoice) => new Date(invoice.createdAt).toLocaleDateString() || 'N/A',
+      render: (invoice: Invoice) => new Date(invoice.createdAt).toLocaleDateString() || '',
     },
     {
       header: "Action",
@@ -308,35 +308,34 @@ const RecFetchInvoices = () => {
   ];
 
   // Define columns for the Card DataTable
-  const cardColumns = [
-    
-    {
-      header: "Patient Name",
-      key: "patient.username" as keyof Card,
-      render: (card: Card) => card.patient.id.firstname || 'N/A',
-    },
-    {
-      header: "Card Price",
-      key: "cardprice" as keyof Card,
-      render: (card: Card) => `${card.cardprice.toFixed(2)}`,
-    },
-    {
-      header: "Created By",
-      key: "createdBy.username" as keyof Card,
-      render: (card: Card) => card.createdBy.username || 'N/A',
-    },
-    {
-      header: "Created At",
-      key: "createdAt" as keyof Card,
-      render: (card: Card) => new Date(card.createdAt).toLocaleDateString() || 'N/A',
-    },
-  ];
+ const cardColumns = [
+  {
+    header: "Patient Name",
+    key: "patient" as keyof Card,
+    render: (card: Card) => card.patient?.id?.firstname || '',
+  },
+  {
+    header: "Card Price",
+    key: "cardprice" as keyof Card,
+    render: (card: Card) => `${(card.cardprice || 0).toFixed(2)}`,
+  },
+  {
+    header: "Created By",
+    key: "createdBy" as keyof Card,
+    render: (card: Card) => card.createdBy?.username || '',
+  },
+  {
+    header: "Created At",
+    key: "createdAt" as keyof Card,
+    render: (card: Card) => card.createdAt ? new Date(card.createdAt).toLocaleDateString() : '',
+  },
+];
   const expensesColumns = [
     
     {
       header: "Discription",
       key: "discription" as keyof Expense,
-      render: (expense: Expense) => expense.discription || 'N/A',
+      render: (expense: Expense) => expense.discription || '',
     },
     {
       header: "Amount",
@@ -346,124 +345,239 @@ const RecFetchInvoices = () => {
     {
       header: "Created By",
       key: "createdBy.username" as keyof Expense,
-      render: (expense: Expense) => expense.createdBy.username || 'N/A',
+      render: (expense: Expense) => expense.createdBy.username || '',
     },
     {
       header: "Created At",
       key: "createdAt" as keyof Expense,
-      render: (expense: Expense) => new Date(expense.createdAt).toLocaleDateString() || 'N/A',
+      render: (expense: Expense) => new Date(expense.createdAt).toLocaleDateString() || '',
     },
   ];
   return (
-    <div className="flex ml-7 mt-7">
-      <div className="flex-grow md:ml-60 container mx-auto">
-        <div className="p-6 bg-white rounded shadow-md">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Invoice Report</h1>
-          <form onSubmit={handleFetchInvoices} className="mb-4">
-            <div className="mb-4">
-              <label htmlFor="doctor" className="block text-sm font-medium text-gray-700">Doctor Name:</label>
-              <select
-                id="doctor"
-                name="doctor"
-                className="border rounded-md w-full p-2"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-              >
-                <option value="">-- Select Doctor --</option>
-                {doctors.map(doctor => (
-                  <option key={doctor._id} value={doctor._id}> {doctor.username}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex gap-4 mb-4">
-              <div className="flex-1">
-                <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date:</label>
-                <input
-                  type="date"
-                  id="startDate"
-                  className="border rounded-md w-full p-2"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date:</label>
-                <input
-                  type="date"
-                  id="endDate"
-                  className="border rounded-md w-full p-2"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex gap-4 mb-4">
-              <Button type="button" onClick={() => setPresetDates('today')} className="bg-gray-300 px-4 py-2 rounded">Today</Button>
-              <Button type="button" onClick={() => setPresetDates('thisWeek')} className="bg-gray-300 px-4 py-2 rounded">This week</Button>
-              <Button type="button" onClick={() => setPresetDates('oneMonth')} className="bg-gray-300 px-4 py-2 rounded">One Month</Button>
-              <Button type="button" onClick={() => setPresetDates('threeMonths')} className="bg-gray-300 px-4 py-2 rounded">Three Months</Button>
-              <Button type="button" onClick={() => setPresetDates('sixMonths')} className="bg-gray-300 px-4 py-2 rounded">Six Months</Button>
-              <Button type="button" onClick={() => setPresetDates('oneyear')} className="bg-gray-300 px-4 py-2 rounded">One Year</Button>
-            </div>
-              {/* Button to toggle receipt dropdown visibility */}
-              <Button type="button" onClick={handleToggleReceipt} className="mb-4 mr-5">
-              {isReceiptVisible ? "H" : "S"}
-            </Button>
+  <div className="flex flex-col lg:ml-7 mt-4 lg:mt-7 px-4 lg:px-0">
+    <div className="flex-grow lg:ml-60 container mx-auto">
+      <div className="p-6 bg-white rounded-lg shadow-lg border border-gray-100">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">Invoice Report</h1>
+          <p className="text-gray-600">Generate detailed financial reports for doctors</p>
+        </div>
 
-            {/* Conditional rendering of the receipt status dropdown */}
-            {isReceiptVisible && (
-              <div className="mb-4">
-               
-                <select
-                  id="receipt"
-                  name="receipt"
-                  className="border rounded-md w-full p-2"
-                  value={receipt}
-                  onChange={(e) => setReceipt(e.target.value)}
+        {/* Filters Section */}
+        <form onSubmit={handleFetchInvoices} className="mb-8">
+          {/* Doctor Filter */}
+          <div className="mb-6">
+            <label htmlFor="doctor" className="block text-sm font-medium text-gray-700 mb-2">
+              <User className="inline w-4 h-4 mr-2" />
+              Doctor
+            </label>
+            <select
+              id="doctor"
+              name="doctor"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            >
+              <option value="">All Doctors</option>
+              {doctors.map(doctor => (
+                <option key={doctor._id} value={doctor._id}>{doctor.username}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Date Range */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+            <div className="space-y-2">
+              <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">
+                <Calendar className="inline w-4 h-4 mr-2" />
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="startDate"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                  disabled
+
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">
+                <Calendar className="inline w-4 h-4 mr-2" />
+                End Date
+              </label>
+              <input
+                type="date"
+                id="endDate"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                  disabled
+
+              />
+            </div>
+          </div>
+
+          {/* Date Presets */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Quick Date Range
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { key: 'today', label: 'Today' },
+                { key: 'thisWeek', label: 'This Week' },
+                
+              ].map((preset) => (
+                <button
+                  key={preset.key}
+                  type="button"
+                  onClick={() => setPresetDates(preset.key)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-medium"
                 >
-                  <option value="">-- Select Status --</option>
-                  <option value="true">T</option>
-                  <option value="false">F</option>
-                </select>
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+       
+
+          {/* Action Button */}
+          <div className="flex justify-center">
+            <button 
+              type="submit" 
+              className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center gap-2"
+            >
+              <Search className="w-5 h-5" />
+              Generate Report
+            </button>
+          </div>
+        </form>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-700 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5" />
+              {errorMessage}
+            </p>
+          </div>
+        )}
+
+        {/* Results Section */}
+        {(invoices.length > 0 || cards.length > 0 || expenses.length > 0) && (
+          <div className="space-y-8">
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {invoices.length > 0 && (
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <div className="text-blue-600 text-sm font-medium">Total Invoices</div>
+                  <div className="text-2xl font-bold text-blue-700">{invoices.length}</div>
+                  <div className="text-blue-600 font-medium">Amount: {totalInvoiceAmount}</div>
+                </div>
+              )}
+              {cards.length > 0 && (
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <div className="text-green-600 text-sm font-medium">Total Cards</div>
+                  <div className="text-2xl font-bold text-green-700">{cards.length}</div>
+                  <div className="text-green-600 font-medium">Amount: {totalCardPrice}</div>
+                </div>
+              )}
+              {expenses.length > 0 && (
+                <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                  <div className="text-orange-600 text-sm font-medium">Total Expenses</div>
+                  <div className="text-2xl font-bold text-orange-700">{expenses.length}</div>
+                  <div className="text-orange-600 font-medium">Amount: {totalexpenses}</div>
+                </div>
+              )}
+            </div>
+
+            {/* Grand Total */}
+            <div className="bg-gradient-to-r from-purple-300 to-blue-400 p-6 rounded-lg text-white text-center">
+              <div className="text-lg font-medium mb-2">Grand Total</div>
+              <div className="text-3xl font-bold">{grandTotal}</div>
+            </div>
+
+            {/* Data Tables */}
+            {invoices.length > 0 && (
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Invoices
+                </h2>
+                <DataTable data={invoices} columns={invoiceColumns} />
               </div>
             )}
-            <button type="submit" className="bg-blue-500 text-white rounded-md py-2 px-4">Fetch Invoices</button>
-          </form>
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          {invoices.length > 0 && (
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold mb-2">Invoices</h2>
-              <DataTable data={invoices} columns={invoiceColumns} />
-              <h3 className="mt-4">Total Amount: {totalInvoiceAmount}</h3>
+
+            {cards.length > 0 && (
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <CreditCard className="w-5 h-5" />
+                  Cards
+                </h2>
+                <DataTable data={cards} columns={cardColumns} />
+              </div>
+            )}
+
+            {expenses.length > 0 && (
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <DollarSign className="w-5 h-5" />
+                  Expenses
+                </h2>
+                <DataTable data={expenses} columns={expensesColumns} />
+              </div>
+            )}
+
+            {/* Export Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center pt-6 border-t border-gray-200">
+              {invoices.length > 0 && (
+                <Button 
+                  onClick={exportToExcel} 
+                  className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Export Invoices
+                </Button>
+              )}
+              {cards.length > 0 && (
+                <Button 
+                  onClick={exportToExcelcard} 
+                  className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Export Cards
+                </Button>
+              )}
+              {expenses.length > 0 && (
+                <Button 
+                  onClick={exportToExpense} 
+                  className="bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Export Expenses
+                </Button>
+              )}
             </div>
-          )}
-          {cards.length > 0 && (
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold mb-2">Cards</h2>
-              <DataTable data={cards} columns={cardColumns} />
-              <h3 className="mt-4">Total Card Price: {totalCardPrice}</h3>
-            </div>
-          )}
-          {expenses.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Expenses</h2>
-              <DataTable data={expenses} columns={expensesColumns} />
-              <h3 className="mt-4">Total Expenses: {totalexpenses}</h3>
-            </div>
-          )}
-          <h3 className="mt-4">Total Price: {grandTotal}</h3>
-          {invoices.length > 0 || cards.length > 0 || expenses.length > 0 ? (
-            <div className="mt-4">
-              <Button onClick={exportToExcel} className=" mb-2 mx-10">Export Invoice to Excel</Button>
-              <Button onClick={exportToExcelcard} className="mb-2 mx-10">Export Card to Excel</Button>
-              <Button onClick={exportToExpense} className="mb-2 mx-10">Export Expense to Excel</Button>
-            </div>
-          ) : null}
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} invoiceId={selectedInvoiceId} />
-        </div>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {invoices.length === 0 && cards.length === 0 && expenses.length === 0 && !errorMessage && (
+          <div className="text-center py-12">
+            <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-700 mb-2">No Report Generated</h3>
+            <p className="text-gray-500">Select your filters and click "Generate Report" to view data</p>
+          </div>
+        )}
+
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} invoiceId={selectedInvoiceId} />
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default RecFetchInvoices;
