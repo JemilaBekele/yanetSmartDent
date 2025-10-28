@@ -18,6 +18,7 @@ const items= [
   { label: "Invoice  Report", icon: <FundOutlined />, link: "/admin/Invoice/report" },
   { label: "Statics", icon: <FundOutlined />, link: "/admin/static/serviceranck" },
    { label: "All Credit", icon: <FundOutlined />, link: "/admin/unconfitmcredit" },
+  { label: "Profile", icon: <UserOutlined />, link: "/admin/profile" },
 
   
 
